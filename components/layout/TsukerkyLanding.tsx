@@ -103,22 +103,37 @@ export function TsukerkyLanding() {
       >
         <div className="col-span-6 flex min-h-[68vh] items-center md:col-span-12">
           <h1
-            className="display-serif relative z-10 grid w-full grid-cols-1 gap-y-4 font-black uppercase leading-[0.76] tracking-[-0.11em] text-[#56304a] md:grid-cols-[1fr_minmax(18rem,30vw)_1fr] md:items-center md:gap-x-8"
-            style={{ fontSize: "clamp(3.7rem, 9.4vw, 11rem)" }}
+            className="display-serif relative z-10 grid w-full grid-cols-[minmax(0,1fr)_minmax(6rem,24vw)_minmax(0,1fr)] grid-rows-2 items-center gap-x-3 gap-y-8 font-black uppercase leading-[0.78] tracking-[-0.1em] text-[#56304a] sm:gap-x-6 md:gap-x-10"
+            style={{ fontSize: "clamp(3.25rem, 10.5vw, 12.5rem)" }}
           >
-            <span className="block overflow-hidden">
-              <span data-hero-word className="block md:text-right">
-                Tsuskerky
+            <span className="block overflow-visible py-2 text-right">
+              <span data-hero-word className="block">
+                Tsuk
               </span>
             </span>
-            <span aria-hidden="true" className="hidden md:block" />
-            <span className="block overflow-hidden">
+            <span aria-hidden="true" className="block" />
+            <span className="block overflow-visible py-2 text-left">
+              <span data-hero-word className="block">
+                Erky
+              </span>
+            </span>
+            <span className="block overflow-visible py-2 text-right">
               <span
                 data-hero-word
                 className="block text-transparent"
                 style={{ WebkitTextStroke: "1px rgba(86,48,74,.34)" }}
               >
-                Vodka
+                Vod
+              </span>
+            </span>
+            <span aria-hidden="true" className="block" />
+            <span className="block overflow-visible py-2 text-left">
+              <span
+                data-hero-word
+                className="block text-transparent"
+                style={{ WebkitTextStroke: "1px rgba(86,48,74,.34)" }}
+              >
+                Ka
               </span>
             </span>
           </h1>
