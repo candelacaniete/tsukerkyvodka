@@ -24,17 +24,17 @@ export function FlavorControls({
             type="button"
             aria-pressed={isActive}
             onClick={() => onFlavorChange(id)}
-            className="flavor-button group flex flex-1 items-center justify-between rounded-full px-4 py-3 text-left text-white transition duration-300 hover:-translate-y-1 sm:px-5"
+            className="flavor-button group flex flex-1 items-center justify-between rounded-full px-4 py-3 text-left text-[#4d2a42] transition duration-300 hover:-translate-y-1 sm:px-5"
           >
             <span className="relative z-10">
-              <span className="block text-[0.66rem] font-black uppercase tracking-[0.28em] text-white/55">
-                Taste switch
+              <span className="block text-[0.66rem] font-black uppercase tracking-[0.28em] text-[#8b6680]">
+                Cambia la vibra
               </span>
               <span className="display-serif mt-1 block text-xl font-black leading-none sm:text-2xl">
                 {flavor.label}
               </span>
             </span>
-            <span className="relative z-10 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[0.63rem] font-black uppercase tracking-[0.22em] text-white/70">
+            <span className="relative z-10 rounded-full border border-white/70 bg-white/45 px-3 py-1 text-[0.63rem] font-black uppercase tracking-[0.22em] text-[#9a5f87]">
               {flavor.note}
             </span>
           </button>

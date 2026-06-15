@@ -21,7 +21,7 @@ type BottleRigProps = {
 
 export function BottleCanvas({ flavor }: BottleCanvasProps) {
   return (
-    <div className="pointer-events-none fixed inset-y-0 right-0 z-20 h-screen w-full md:w-[72vw]">
+    <div className="pointer-events-none fixed inset-y-0 right-0 z-20 h-screen w-full md:w-[70vw]">
       <Canvas
         camera={{ position: [0, 0.25, 6.3], fov: 34 }}
         dpr={[1, 1.75]}
@@ -31,35 +31,42 @@ export function BottleCanvas({ flavor }: BottleCanvasProps) {
           powerPreference: "high-performance",
         }}
       >
-        <ambientLight intensity={0.46} />
+        <ambientLight intensity={0.86} />
         <pointLight
-          position={[-3.8, 1.9, 3.2]}
-          intensity={22}
-          color="#ff4faf"
-          distance={8}
+          position={[-3.3, 3.2, 4.4]}
+          intensity={8.5}
+          color="#ffffff"
+          distance={9}
         />
         <pointLight
-          position={[4.4, 1.1, 3.4]}
-          intensity={19}
-          color="#8a45ff"
-          distance={8}
+          position={[3.4, 2.4, 4.6]}
+          intensity={6.2}
+          color="#fff8fb"
+          distance={9}
+        />
+        <pointLight
+          position={[0, -2.3, 2.8]}
+          intensity={5.4}
+          color="#ffc0cb"
+          distance={6}
         />
         <spotLight
-          position={[0, 4.8, 4.2]}
-          intensity={2.7}
-          angle={0.32}
-          penumbra={0.78}
-          color="#fff3fb"
+          position={[0, 5.2, 4.8]}
+          intensity={2.1}
+          angle={0.36}
+          penumbra={0.86}
+          color="#ffffff"
         />
         <BottleRig flavor={flavor} />
         <ContactShadows
           position={[0, -2.35, 0]}
-          opacity={0.26}
+          opacity={0.14}
           scale={6}
-          blur={2.8}
+          blur={3.6}
           far={2.2}
+          color="#d65793"
         />
-        <Environment preset="night" />
+        <Environment preset="studio" />
       </Canvas>
     </div>
   );
@@ -189,17 +196,17 @@ function BottleBody({
 }) {
   const glassMaterial = (
     <meshPhysicalMaterial
-      color="#fff8fb"
+      color="#ffd9e8"
       metalness={0}
-      roughness={0.025}
-      transmission={0.96}
-      thickness={0.72}
+      roughness={0.15}
+      transmission={0.9}
+      thickness={1.5}
       ior={1.48}
       clearcoat={1}
-      clearcoatRoughness={0.08}
+      clearcoatRoughness={0.12}
       transparent
-      opacity={0.34}
-      envMapIntensity={1.15}
+      opacity={0.42}
+      envMapIntensity={0.72}
       side={THREE.DoubleSide}
     />
   );
@@ -212,17 +219,17 @@ function BottleBody({
           ref={liquidMaterialRef}
           color={flavors[flavor].liquid}
           emissive={flavors[flavor].liquid}
-          emissiveIntensity={0.08}
-          roughness={0.17}
-          transmission={0.36}
-          thickness={0.48}
+          emissiveIntensity={0.025}
+          roughness={0.2}
+          transmission={0.42}
+          thickness={0.62}
           transparent
-          opacity={0.62}
-          clearcoat={0.7}
+          opacity={0.54}
+          clearcoat={0.86}
         />
       </mesh>
 
-      <mesh position={[0, -0.39, 0]}>{/* broad glass wall */}
+      <mesh position={[0, -0.39, 0]}>{/* pared amplia de vidrio */}
         <cylinderGeometry args={[0.78, 0.91, 3.52, 128]} />
         {glassMaterial}
       </mesh>
@@ -240,27 +247,27 @@ function BottleBody({
       <mesh position={[0, 2.96, 0]}>
         <cylinderGeometry args={[0.43, 0.43, 0.78, 96]} />
         <meshStandardMaterial
-          color="#d8b99d"
-          roughness={0.32}
-          metalness={0.2}
-          envMapIntensity={0.8}
+          color="#e9c8ad"
+          roughness={0.38}
+          metalness={0.12}
+          envMapIntensity={0.55}
         />
       </mesh>
 
       <mesh position={[0, 3.31, 0]}>
         <torusGeometry args={[0.38, 0.025, 14, 96]} />
-        <meshStandardMaterial color="#f1d5bc" metalness={0.18} roughness={0.2} />
+        <meshStandardMaterial color="#f5d9c2" metalness={0.12} roughness={0.26} />
       </mesh>
 
       <mesh position={[0, -2.13, 0]}>
         <cylinderGeometry args={[0.84, 0.88, 0.16, 128]} />
         <meshPhysicalMaterial
           color="#ffffff"
-          roughness={0.08}
-          transmission={0.62}
-          thickness={0.36}
+          roughness={0.14}
+          transmission={0.72}
+          thickness={0.6}
           transparent
-          opacity={0.52}
+          opacity={0.46}
         />
       </mesh>
 
@@ -275,29 +282,29 @@ function BottleLabel() {
     <group position={[0, -0.45, 0.925]}>
       <mesh>
         <planeGeometry args={[1.46, 1.67]} />
-        <meshBasicMaterial color="#ffc0dc" transparent opacity={0.88} />
+        <meshBasicMaterial color="#ffe0ee" transparent opacity={0.9} />
       </mesh>
       <mesh position={[0, 0, 0.012]}>
         <planeGeometry args={[1.31, 1.51]} />
-        <meshBasicMaterial color="#ffd1e7" transparent opacity={0.54} />
+        <meshBasicMaterial color="#fff4f9" transparent opacity={0.58} />
       </mesh>
       <mesh position={[0, 0.47, 0.026]}>
         <torusGeometry args={[0.24, 0.014, 12, 72]} />
-        <meshBasicMaterial color="#121019" />
+        <meshBasicMaterial color="#4f2a44" />
       </mesh>
       <mesh position={[0, 0.47, 0.034]}>
         <torusGeometry args={[0.16, 0.018, 12, 72]} />
-        <meshBasicMaterial color="#23c9ff" />
+        <meshBasicMaterial color="#b99cff" />
       </mesh>
       <mesh position={[0, 0.47, 0.042]}>
         <circleGeometry args={[0.09, 48]} />
-        <meshBasicMaterial color="#ff4faf" />
+        <meshBasicMaterial color="#ff8fbc" />
       </mesh>
       <Text
         position={[0, 0.04, 0.05]}
         fontSize={0.18}
         letterSpacing={0.045}
-        color="#150d15"
+        color="#4f2a44"
         anchorX="center"
         anchorY="middle"
       >
@@ -311,27 +318,27 @@ function BottleLabel() {
         anchorX="center"
         anchorY="middle"
       >
-        MADE WITH VODKA
+        HECHO CON VODKA
       </Text>
       <Text
         position={[0, -0.45, 0.05]}
         fontSize={0.115}
         letterSpacing={0.02}
-        color="#f23399"
+        color="#d65793"
         anchorX="center"
         anchorY="middle"
       >
-        Pink Candy
+        Chicle Rosa
       </Text>
       <Text
         position={[0, -0.66, 0.05]}
         fontSize={0.05}
         letterSpacing={0.08}
-        color="#352437"
+        color="#72546a"
         anchorX="center"
         anchorY="middle"
       >
-        TEN TIMES FILTERED / 30% ALC. VOL
+        10 VECES FILTRADO / 30% ALC. VOL
       </Text>
     </group>
   );
