@@ -374,13 +374,20 @@ function CupIllustration({
   className: string;
   variant: "ocean" | "diamond";
 }) {
+  const isDiamond = variant === "diamond";
+
   return (
     <div
-      className={`absolute top-9 h-44 w-20 -translate-x-1/2 overflow-hidden rounded-b-[1.7rem] rounded-t-xl border border-white/80 shadow-2xl shadow-pink-200/40 ${className} ${
-        variant === "ocean"
-          ? "bg-gradient-to-b from-pink-200 via-sky-200 to-cyan-200"
-          : "bg-gradient-to-b from-pink-300 via-pink-200 to-pink-100"
+      className={`absolute top-9 h-44 w-20 -translate-x-1/2 overflow-hidden border border-white/80 shadow-2xl shadow-pink-200/40 ${className} ${
+        isDiamond
+          ? "rounded-b-[1.35rem] rounded-t-[0.7rem] bg-gradient-to-b from-white via-white to-pink-300"
+          : "rounded-b-[1.7rem] rounded-t-xl bg-gradient-to-b from-pink-200 via-sky-200 to-cyan-200"
       }`}
+      style={
+        isDiamond
+          ? { clipPath: "polygon(12% 0, 88% 0, 78% 100%, 22% 100%)" }
+          : undefined
+      }
     >
       {variant === "ocean" ? (
         <div className="absolute inset-0 opacity-60">
@@ -398,9 +405,36 @@ function CupIllustration({
           )}
         </div>
       ) : null}
-      <div className="absolute -top-1 left-1/2 h-7 w-20 -translate-x-1/2 rounded-t-xl bg-[#3d3448]/75" />
-      <div className="absolute left-1/2 top-0 h-32 w-1 -translate-x-1/2 -translate-y-10 bg-white/75" />
-      <div className="absolute left-1/2 top-14 h-11 w-11 -translate-x-1/2 rounded-full border-2 border-[#56304a]/60 bg-white/50" />
+      {isDiamond ? (
+        <div className="absolute inset-0 opacity-45">
+          {Array.from({ length: 9 }).map((_, row) =>
+            Array.from({ length: 5 }).map((__, col) => (
+              <span
+                key={`${row}-${col}`}
+                className="absolute h-4 w-4 rotate-45 border border-[#cfc7d8]/70 bg-white/30"
+                style={{
+                  left: `${col * 1.05 - 0.1}rem`,
+                  top: `${row * 1.05}rem`,
+                }}
+              />
+            )),
+          )}
+        </div>
+      ) : null}
+      <div
+        className={`absolute -top-1 left-1/2 h-7 w-20 -translate-x-1/2 rounded-t-xl ${
+          isDiamond ? "bg-[#ff6f9f]" : "bg-[#3d3448]/75"
+        }`}
+      />
+      <div
+        className={`absolute left-1/2 top-0 h-32 w-1 -translate-x-1/2 -translate-y-10 ${
+          isDiamond ? "bg-[#ff4f88]" : "bg-white/75"
+        }`}
+      />
+      <div className="absolute left-1/2 top-14 h-11 w-11 -translate-x-1/2 rounded-full border-2 border-[#56304a]/60 bg-white/60">
+        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-300 via-pink-400 to-fuchsia-500" />
+        <div className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
+      </div>
     </div>
   );
 }
