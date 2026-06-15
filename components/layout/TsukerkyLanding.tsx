@@ -7,30 +7,45 @@ import { BottleCanvas } from "@/components/visuals/BottleCanvas";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const productVariants = [
+type ProductKind = "combo-ocean" | "combo-diamond" | "ocean" | "diamond" | "glow";
+
+const storeProducts: Array<{
+  name: string;
+  price: string;
+  detail: string;
+  kind: ProductKind;
+  usesBottle?: boolean;
+}> = [
   {
-    name: "Chicle Rosa",
-    note: "Tutti-frutti",
-    detail: "La original. Dulce, limpia y lista para hielo.",
-    swatch: "from-pink-200 via-white to-pink-100",
+    name: "Tsukerky Pink Candy + Vaso Ocean Pink",
+    price: "$48.000,00",
+    detail: "Combo demo con vaso de regalo. No procesa compra real.",
+    kind: "combo-ocean",
+    usesBottle: true,
   },
   {
-    name: "Uva Lila",
-    note: "Uva pastel",
-    detail: "Un toque violeta, suave y fotogénico.",
-    swatch: "from-violet-200 via-white to-fuchsia-100",
+    name: "Vaso Tsukerky Ocean Pink",
+    price: "$29.000,00",
+    detail: "Vaso perlado con textura oceánica rosa pastel.",
+    kind: "ocean",
   },
   {
-    name: "Nube Blanca",
-    note: "Vainilla fría",
-    detail: "Cremosa, ligera y con vibra de cierre suave.",
-    swatch: "from-white via-pink-50 to-violet-100",
+    name: "Vaso Tsukerky Diamond Pink",
+    price: "$29.000,00",
+    detail: "Vaso rosa con tapa y textura diamond Y2K.",
+    kind: "diamond",
   },
   {
-    name: "Brillo Pop",
-    note: "Caramelo ácido",
-    detail: "Más atrevida, más eléctrica, misma base limpia.",
-    swatch: "from-rose-200 via-orange-100 to-white",
+    name: "Tsukerky Pink Candy + Vaso Diamond Pink",
+    price: "$48.000,00",
+    detail: "Combo demo con vaso diamond incluido.",
+    kind: "combo-diamond",
+  },
+  {
+    name: "Tsukerky Glow - Purple",
+    price: "$5.300,00",
+    detail: "Glow purple para sumar brillo a la previa.",
+    kind: "glow",
   },
 ];
 
@@ -168,52 +183,46 @@ export function TsukerkyLanding() {
         data-section="products"
         className="relative z-40 min-h-screen px-6 py-28 sm:px-10 md:px-14 lg:px-20"
       >
-        <div data-fade-in className="mx-auto max-w-4xl text-center">
+        <div data-fade-in className="mx-auto max-w-5xl text-center">
           <h2 className="display-serif text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
-            Una fila de sabores para armar tu ritual frío.
+            Tienda demo para armar tu ritual frío.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#73556c]">
-            La botella 3D se encoge y se integra como primer producto. Las
-            variantes completan la familia con vidrio translúcido y pegatinas
-            de caramelo.
+            Catálogo visual no funcional: los botones no procesan compras, solo
+            muestran cómo se vería la experiencia online de Tsukerky.
           </p>
         </div>
 
-        <div className="mt-24 grid gap-5 md:grid-cols-4">
-          {productVariants.map((product, index) => (
+        <div className="mt-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {storeProducts.map((product) => (
             <article
               key={product.name}
               data-fade-in
-              data-bottle-card={index === 0 ? "true" : undefined}
-              className={`cloud-card relative min-h-[28rem] overflow-hidden rounded-[3rem] p-6 ${
-                index === 0 ? "z-[44]" : "z-40"
+              data-bottle-card={product.usesBottle ? "true" : undefined}
+              className={`cloud-card relative min-h-[31rem] overflow-hidden rounded-[2rem] p-5 ${
+                product.usesBottle ? "z-[44]" : "z-40"
               }`}
             >
-              <div
-                className={`absolute inset-x-6 top-7 h-64 rounded-[2.4rem] shadow-xl shadow-pink-200/30 ${
-                  index === 0
-                    ? "bg-white/10"
-                    : `bg-gradient-to-br ${product.swatch}`
-                }`}
-              />
-              {index === 0 ? null : (
-                <div className="absolute left-1/2 top-12 h-64 w-24 -translate-x-1/2 rounded-[2rem] border border-white/80 bg-white/45 shadow-2xl shadow-pink-200/40 backdrop-blur-xl">
-                  <div className="mx-auto mt-4 h-10 w-16 rounded-t-2xl bg-[#e9c8ad]" />
-                  <div className="mx-auto mt-8 h-28 w-16 rounded-2xl bg-white/65" />
-                </div>
-              )}
-              <div className="relative z-[60] mt-80">
-                {index === 0 ? (
-                  <p className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#a06a91]">
-                    Producto real 3D
-                  </p>
-                ) : null}
-                <h3 className="display-serif mt-3 text-4xl font-black leading-none tracking-[-0.05em] text-[#56304a]">
+              <div className="absolute inset-x-5 top-5 h-64 overflow-hidden rounded-[1.45rem] bg-gradient-to-br from-white/80 via-sky-100/70 to-pink-100/70 shadow-xl shadow-pink-200/30">
+                <ProductVisual kind={product.kind} usesBottle={product.usesBottle} />
+              </div>
+              <div className="relative z-[60] mt-72">
+                <h3 className="min-h-16 text-lg font-black leading-tight text-[#ff1493]">
                   {product.name}
                 </h3>
-                <p className="mt-4 text-sm leading-6 text-[#73556c]">
+                <p className="mt-3 text-xl font-black text-[#ff1493]">
+                  {product.price}
+                </p>
+                <p className="mt-3 min-h-12 text-sm leading-6 text-[#73556c]">
                   {product.detail}
                 </p>
+                <button
+                  type="button"
+                  disabled
+                  className="mt-5 w-full cursor-not-allowed rounded-full border border-[#a998e8]/60 bg-white/30 px-5 py-3 text-sm font-black text-[#a998e8] opacity-80"
+                >
+                  Comprar
+                </button>
               </div>
             </article>
           ))}
@@ -284,6 +293,67 @@ function CloudLayer() {
       <div className="floating-cloud right-[5vw] top-[26vh] h-28 w-60 [animation-delay:-5s]" />
       <div className="floating-cloud left-[18vw] top-[72vh] h-24 w-56 [animation-delay:-9s]" />
       <div className="floating-cloud right-[18vw] top-[76vh] h-32 w-72 [animation-delay:-13s]" />
+    </div>
+  );
+}
+
+function ProductVisual({
+  kind,
+  usesBottle,
+}: {
+  kind: ProductKind;
+  usesBottle?: boolean;
+}) {
+  const showOcean = kind === "ocean" || kind === "combo-ocean";
+  const showDiamond = kind === "diamond" || kind === "combo-diamond";
+  const showGlow = kind === "glow";
+
+  return (
+    <div className="relative h-full w-full">
+      {showGlow ? (
+        <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-fuchsia-300 via-purple-300 to-violet-500 shadow-2xl shadow-purple-300/50">
+          <div className="absolute inset-5 rounded-full border border-[#56304a]/40 bg-white/30" />
+          <div className="absolute inset-x-2 top-10 text-center text-[0.48rem] font-black uppercase tracking-[0.12em] text-[#56304a]">
+            Tsukerky
+          </div>
+        </div>
+      ) : null}
+
+      {showOcean ? (
+        <CupIllustration
+          className={usesBottle ? "left-[58%]" : "left-1/2"}
+          variant="ocean"
+        />
+      ) : null}
+
+      {showDiamond ? (
+        <CupIllustration
+          className={usesBottle ? "left-[58%]" : "left-1/2"}
+          variant="diamond"
+        />
+      ) : null}
+    </div>
+  );
+}
+
+function CupIllustration({
+  className,
+  variant,
+}: {
+  className: string;
+  variant: "ocean" | "diamond";
+}) {
+  return (
+    <div
+      className={`absolute top-9 h-44 w-20 -translate-x-1/2 rounded-b-[1.7rem] rounded-t-xl border border-white/80 shadow-2xl shadow-pink-200/40 ${className} ${
+        variant === "ocean"
+          ? "bg-gradient-to-b from-pink-200 via-sky-200 to-cyan-200"
+          : "bg-gradient-to-b from-pink-300 via-pink-200 to-pink-100"
+      }`}
+    >
+      <div className="absolute -top-5 left-1/2 h-7 w-14 -translate-x-1/2 rounded-t-xl bg-white/90" />
+      <div className="absolute -top-8 left-1/2 h-12 w-1 -translate-x-1/2 bg-pink-400" />
+      <div className="absolute left-1/2 top-14 h-11 w-11 -translate-x-1/2 rounded-full border-2 border-[#56304a]/60 bg-white/50" />
     </div>
   );
 }
