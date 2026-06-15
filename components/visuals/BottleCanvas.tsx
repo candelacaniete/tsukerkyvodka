@@ -19,9 +19,22 @@ type BottleRigProps = {
   flavor: FlavorId;
 };
 
+type ScrollTarget = {
+  x: number;
+  y: number;
+  z: number;
+  rx: number;
+  ry: number;
+  rz: number;
+  sx: number;
+  sy: number;
+  sz: number;
+  opacity: number;
+};
+
 export function BottleCanvas({ flavor }: BottleCanvasProps) {
   return (
-    <div className="pointer-events-none fixed inset-y-0 right-0 z-20 h-screen w-full md:w-[70vw]">
+    <div className="pointer-events-none fixed inset-0 z-[35] h-screen w-full">
       <Canvas
         camera={{ position: [0, 0.25, 6.3], fov: 34 }}
         dpr={[1, 1.75]}
@@ -76,7 +89,21 @@ function BottleRig({ flavor }: BottleRigProps) {
   const groupRef = useRef<THREE.Group | null>(null);
   const liquidMaterialRef = useRef<THREE.MeshPhysicalMaterial | null>(null);
   const pointer = useRef({ x: 0, y: 0 });
-  const scroll = useRef({ current: 0, target: 0 });
+  const scrollTarget = useRef<ScrollTarget>({
+    x: 0,
+    y: -0.04,
+    z: 0,
+    rx: 0,
+    ry: 0,
+    rz: 0,
+    sx: 1.04,
+    sy: 1.04,
+    sz: 1.04,
+    opacity: 1,
+  });
+  const materialOpacities = useRef<
+    Array<{ material: THREE.Material; baseOpacity: number }>
+  >([]);
 
   useEffect(() => {
     const handlePointerMove = (event: PointerEvent) => {
@@ -93,22 +120,108 @@ function BottleRig({ flavor }: BottleRigProps) {
       );
     };
 
-    const trigger = ScrollTrigger.create({
-      trigger: document.documentElement,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 1,
-      onUpdate: (self) => {
-        scroll.current.target = self.progress;
-      },
-    });
-
     window.addEventListener("pointermove", handlePointerMove);
-    ScrollTrigger.refresh();
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
-      trigger.kill();
+    };
+  }, []);
+
+  useEffect(() => {
+    const group = groupRef.current;
+    if (!group) {
+      return;
+    }
+
+    materialOpacities.current = [];
+    group.traverse((child) => {
+      if (!(child instanceof THREE.Mesh)) {
+        return;
+      }
+
+      const materials = Array.isArray(child.material)
+        ? child.material
+        : [child.material];
+
+      materials.forEach((material) => {
+        material.transparent = true;
+        materialOpacities.current.push({
+          material,
+          baseOpacity: material.opacity,
+        });
+      });
+    });
+
+    const target = scrollTarget.current;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const manifestoX = isMobile ? 0.48 : 1.18;
+    const productsX = isMobile ? -0.18 : -1.88;
+    const historyX = isMobile ? 1.45 : 2.78;
+
+    const timeline = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: "[data-scroll-story]",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    timeline
+      .to(target, {
+        x: manifestoX,
+        y: -0.36,
+        rx: 0.05,
+        ry: 0.48,
+        rz: -0.045,
+        sx: 0.92,
+        sy: 0.92,
+        sz: 0.92,
+        opacity: 1,
+        duration: 1,
+      })
+      .to(target, {
+        x: productsX,
+        y: -0.86,
+        rx: -0.02,
+        ry: 1.18,
+        rz: 0.04,
+        sx: 0.52,
+        sy: 0.68,
+        sz: 0.52,
+        opacity: 1,
+        duration: 1,
+      })
+      .to(target, {
+        x: historyX,
+        y: -0.48,
+        rx: 0.03,
+        ry: 1.9,
+        rz: -0.02,
+        sx: 0.42,
+        sy: 0.42,
+        sz: 0.42,
+        opacity: 0.18,
+        duration: 1,
+      })
+      .to(target, {
+        x: historyX + 0.65,
+        y: -0.24,
+        ry: 2.35,
+        sx: 0.32,
+        sy: 0.32,
+        sz: 0.32,
+        opacity: 0,
+        duration: 0.55,
+      });
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      timeline.scrollTrigger?.kill();
+      timeline.kill();
     };
   }, []);
 
@@ -141,47 +254,54 @@ function BottleRig({ flavor }: BottleRigProps) {
       return;
     }
 
-    const damping = 1 - Math.exp(-delta * 4.2);
-    scroll.current.current = THREE.MathUtils.lerp(
-      scroll.current.current,
-      scroll.current.target,
-      damping,
-    );
+    const damping = 1 - Math.exp(-delta * 4.8);
 
     const floatY = Math.sin(state.clock.elapsedTime * 0.92) * 0.09;
     const cursorX = pointer.current.x;
     const cursorY = pointer.current.y;
-    const scrollProgress = scroll.current.current;
+    const target = scrollTarget.current;
 
     group.position.y = THREE.MathUtils.lerp(
       group.position.y,
-      floatY - scrollProgress * 0.72,
+      target.y + floatY,
       damping,
     );
     group.position.x = THREE.MathUtils.lerp(
       group.position.x,
-      cursorX * 0.16 + scrollProgress * 0.22,
+      target.x + cursorX * 0.12,
       damping,
     );
+    group.position.z = THREE.MathUtils.lerp(group.position.z, target.z, damping);
     group.rotation.x = THREE.MathUtils.lerp(
       group.rotation.x,
-      -cursorY * 0.15,
+      target.rx - cursorY * 0.1,
       damping,
     );
     group.rotation.y = THREE.MathUtils.lerp(
       group.rotation.y,
-      cursorX * 0.23 + scrollProgress * Math.PI * 1.15,
+      target.ry + cursorX * 0.16,
       damping,
     );
     group.rotation.z = THREE.MathUtils.lerp(
       group.rotation.z,
-      -cursorX * 0.055,
+      target.rz - cursorX * 0.035,
       damping,
     );
+    group.scale.x = THREE.MathUtils.lerp(group.scale.x, target.sx, damping);
+    group.scale.y = THREE.MathUtils.lerp(group.scale.y, target.sy, damping);
+    group.scale.z = THREE.MathUtils.lerp(group.scale.z, target.sz, damping);
+
+    materialOpacities.current.forEach(({ material, baseOpacity }) => {
+      material.opacity = THREE.MathUtils.lerp(
+        material.opacity,
+        baseOpacity * target.opacity,
+        damping,
+      );
+    });
   });
 
   return (
-    <group ref={groupRef} position={[0.62, -0.06, 0]} scale={0.92}>
+    <group ref={groupRef} position={[0, -0.04, 0]} scale={1.04}>
       <BottleBody liquidMaterialRef={liquidMaterialRef} flavor={flavor} />
     </group>
   );
