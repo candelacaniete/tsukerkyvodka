@@ -14,14 +14,12 @@ const storeProducts: Array<{
   price: string;
   detail: string;
   kind: ProductKind;
-  usesBottle?: boolean;
 }> = [
   {
     name: "Tsukerky Pink Candy + Vaso Ocean Pink",
     price: "$48.000,00",
     detail: "Combo demo con vaso de regalo. No procesa compra real.",
     kind: "combo-ocean",
-    usesBottle: true,
   },
   {
     name: "Vaso Tsukerky Ocean Pink",
@@ -173,13 +171,10 @@ export function TsukerkyLanding() {
             <article
               key={product.name}
               data-fade-in
-              data-bottle-card={product.usesBottle ? "true" : undefined}
-              className={`cloud-card relative min-h-[31rem] overflow-hidden rounded-[2rem] p-5 ${
-                product.usesBottle ? "z-[44]" : "z-40"
-              }`}
+              className="cloud-card relative z-40 min-h-[31rem] overflow-hidden rounded-[2rem] p-5"
             >
               <div className="absolute inset-x-5 top-5 h-64 overflow-hidden rounded-[1.45rem] bg-gradient-to-br from-white/80 via-sky-100/70 to-pink-100/70 shadow-xl shadow-pink-200/30">
-                <ProductVisual kind={product.kind} usesBottle={product.usesBottle} />
+                <ProductVisual kind={product.kind} />
               </div>
               <div className="relative z-[60] mt-72">
                 <h3 className="min-h-16 text-lg font-black leading-tight text-[#ff1493]">
@@ -258,11 +253,10 @@ function CloudLayer() {
 
 function ProductVisual({
   kind,
-  usesBottle,
 }: {
   kind: ProductKind;
-  usesBottle?: boolean;
 }) {
+  const showComboBottle = kind === "combo-ocean" || kind === "combo-diamond";
   const showOcean = kind === "ocean" || kind === "combo-ocean";
   const showDiamond = kind === "diamond" || kind === "combo-diamond";
   const showGlow = kind === "glow";
@@ -278,19 +272,34 @@ function ProductVisual({
         </div>
       ) : null}
 
+      {showComboBottle ? <StaticBottleIllustration /> : null}
+
       {showOcean ? (
         <CupIllustration
-          className={usesBottle ? "left-[58%]" : "left-1/2"}
+          className={showComboBottle ? "left-[64%]" : "left-1/2"}
           variant="ocean"
         />
       ) : null}
 
       {showDiamond ? (
         <CupIllustration
-          className={usesBottle ? "left-[58%]" : "left-1/2"}
+          className={showComboBottle ? "left-[64%]" : "left-1/2"}
           variant="diamond"
         />
       ) : null}
+    </div>
+  );
+}
+
+function StaticBottleIllustration() {
+  return (
+    <div className="absolute left-[36%] top-8 h-48 w-20 -translate-x-1/2">
+      <div className="absolute left-1/2 top-0 h-8 w-9 -translate-x-1/2 rounded-t-xl bg-[#f5d9c2]" />
+      <div className="absolute left-1/2 top-7 h-16 w-5 -translate-x-1/2 bg-white/55" />
+      <div className="absolute bottom-0 left-1/2 h-36 w-16 -translate-x-1/2 rounded-b-2xl rounded-t-lg border border-white/80 bg-gradient-to-b from-fuchsia-300 via-fuchsia-400 to-pink-300 shadow-2xl shadow-pink-200/50" />
+      <div className="absolute bottom-12 left-1/2 h-14 w-12 -translate-x-1/2 rounded-md bg-white/75 shadow-md">
+        <div className="mx-auto mt-3 h-5 w-5 rounded-full border border-[#56304a]/60 bg-pink-200" />
+      </div>
     </div>
   );
 }

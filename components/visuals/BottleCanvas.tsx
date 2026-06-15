@@ -43,9 +43,9 @@ export function BottleCanvas({ flavor }: BottleCanvasProps) {
     }
 
     const trigger = ScrollTrigger.create({
-      trigger: "[data-section='history']",
-      start: "top 88%",
-      end: "top 58%",
+      trigger: "[data-section='products']",
+      start: "top 92%",
+      end: "top 68%",
       scrub: true,
       onUpdate: (self) => {
         gsap.set(wrapper, { autoAlpha: 1 - self.progress });
@@ -181,14 +181,13 @@ function BottleRig({ flavor }: BottleRigProps) {
     const target = scrollTarget.current;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const manifestoX = isMobile ? 0.48 : 1.18;
-    const productsX = isMobile ? -0.18 : -2.34;
 
     const timeline = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
         trigger: "[data-scroll-story]",
         start: "top top",
-        endTrigger: "[data-section='products']",
+        endTrigger: "[data-section='manifesto']",
         end: "top top",
         scrub: 1,
         invalidateOnRefresh: true,
@@ -205,19 +204,6 @@ function BottleRig({ flavor }: BottleRigProps) {
         sx: 0.92,
         sy: 0.92,
         sz: 0.92,
-        opacity: 1,
-        motion: 1,
-        duration: 1,
-      })
-      .to(target, {
-        x: productsX,
-        y: -0.42,
-        rx: -0.02,
-        ry: 1.18,
-        rz: 0.04,
-        sx: 0.22,
-        sy: 0.32,
-        sz: 0.22,
         opacity: 1,
         motion: 0,
         duration: 1,
