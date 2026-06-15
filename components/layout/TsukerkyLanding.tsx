@@ -260,6 +260,7 @@ function ProductVisual({
   const showOcean = kind === "ocean" || kind === "combo-ocean";
   const showDiamond = kind === "diamond" || kind === "combo-diamond";
   const showGlow = kind === "glow";
+  const cupPosition = showComboBottle ? "left-[36%]" : "left-1/2";
 
   return (
     <div className="relative h-full w-full">
@@ -272,18 +273,18 @@ function ProductVisual({
         </div>
       ) : null}
 
-      {showComboBottle ? <StaticBottleIllustration /> : null}
+      {showComboBottle ? <StaticBottleIllustration className="left-[66%]" /> : null}
 
       {showOcean ? (
         <CupIllustration
-          className={showComboBottle ? "left-[64%]" : "left-1/2"}
+          className={cupPosition}
           variant="ocean"
         />
       ) : null}
 
       {showDiamond ? (
         <CupIllustration
-          className={showComboBottle ? "left-[64%]" : "left-1/2"}
+          className={cupPosition}
           variant="diamond"
         />
       ) : null}
@@ -291,9 +292,9 @@ function ProductVisual({
   );
 }
 
-function StaticBottleIllustration() {
+function StaticBottleIllustration({ className }: { className: string }) {
   return (
-    <div className="absolute left-[36%] top-8 h-48 w-20 -translate-x-1/2">
+    <div className={`absolute top-8 h-48 w-20 -translate-x-1/2 ${className}`}>
       <div className="absolute left-1/2 top-0 h-8 w-9 -translate-x-1/2 rounded-t-xl bg-[#f5d9c2]" />
       <div className="absolute left-1/2 top-7 h-16 w-5 -translate-x-1/2 bg-white/55" />
       <div className="absolute bottom-0 left-1/2 h-36 w-16 -translate-x-1/2 rounded-b-2xl rounded-t-lg border border-white/80 bg-gradient-to-b from-fuchsia-300 via-fuchsia-400 to-pink-300 shadow-2xl shadow-pink-200/50" />
@@ -313,14 +314,30 @@ function CupIllustration({
 }) {
   return (
     <div
-      className={`absolute top-9 h-44 w-20 -translate-x-1/2 rounded-b-[1.7rem] rounded-t-xl border border-white/80 shadow-2xl shadow-pink-200/40 ${className} ${
+      className={`absolute top-9 h-44 w-20 -translate-x-1/2 overflow-hidden rounded-b-[1.7rem] rounded-t-xl border border-white/80 shadow-2xl shadow-pink-200/40 ${className} ${
         variant === "ocean"
           ? "bg-gradient-to-b from-pink-200 via-sky-200 to-cyan-200"
           : "bg-gradient-to-b from-pink-300 via-pink-200 to-pink-100"
       }`}
     >
-      <div className="absolute -top-5 left-1/2 h-7 w-14 -translate-x-1/2 rounded-t-xl bg-white/90" />
-      <div className="absolute -top-8 left-1/2 h-12 w-1 -translate-x-1/2 bg-pink-400" />
+      {variant === "ocean" ? (
+        <div className="absolute inset-0 opacity-60">
+          {Array.from({ length: 7 }).map((_, row) =>
+            Array.from({ length: 4 }).map((__, col) => (
+              <span
+                key={`${row}-${col}`}
+                className="absolute h-8 w-9 rounded-b-full border-x border-b border-white/70 bg-white/10"
+                style={{
+                  left: `${col * 1.35 - (row % 2) * 0.66}rem`,
+                  top: `${row * 1.28}rem`,
+                }}
+              />
+            )),
+          )}
+        </div>
+      ) : null}
+      <div className="absolute -top-1 left-1/2 h-7 w-20 -translate-x-1/2 rounded-t-xl bg-[#3d3448]/75" />
+      <div className="absolute left-1/2 top-0 h-32 w-1 -translate-x-1/2 -translate-y-10 bg-white/75" />
       <div className="absolute left-1/2 top-14 h-11 w-11 -translate-x-1/2 rounded-full border-2 border-[#56304a]/60 bg-white/50" />
     </div>
   );
