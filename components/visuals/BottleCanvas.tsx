@@ -33,8 +33,32 @@ type ScrollTarget = {
 };
 
 export function BottleCanvas({ flavor }: BottleCanvasProps) {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) {
+      return;
+    }
+
+    const trigger = ScrollTrigger.create({
+      trigger: "[data-section='history']",
+      start: "top 88%",
+      end: "top 58%",
+      scrub: true,
+      onUpdate: (self) => {
+        gsap.set(wrapper, { autoAlpha: 1 - self.progress });
+      },
+    });
+
+    return () => trigger.kill();
+  }, []);
+
   return (
-    <div className="pointer-events-none fixed inset-0 z-[35] h-screen w-full">
+    <div
+      ref={wrapperRef}
+      className="pointer-events-none fixed inset-0 z-[35] h-screen w-full"
+    >
       <Canvas
         camera={{ position: [0, 0.25, 6.3], fov: 34 }}
         dpr={[1, 1.75]}
@@ -155,15 +179,15 @@ function BottleRig({ flavor }: BottleRigProps) {
     const target = scrollTarget.current;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const manifestoX = isMobile ? 0.48 : 1.18;
-    const productsX = isMobile ? -0.18 : -1.88;
-    const historyX = isMobile ? 1.45 : 2.78;
+    const productsX = isMobile ? -0.18 : -2.34;
 
     const timeline = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
         trigger: "[data-scroll-story]",
         start: "top top",
-        end: "bottom bottom",
+        endTrigger: "[data-section='products']",
+        end: "top top",
         scrub: 1,
         invalidateOnRefresh: true,
       },
@@ -184,37 +208,15 @@ function BottleRig({ flavor }: BottleRigProps) {
       })
       .to(target, {
         x: productsX,
-        y: -0.86,
+        y: -0.46,
         rx: -0.02,
         ry: 1.18,
         rz: 0.04,
-        sx: 0.52,
-        sy: 0.68,
-        sz: 0.52,
+        sx: 0.34,
+        sy: 0.5,
+        sz: 0.34,
         opacity: 1,
         duration: 1,
-      })
-      .to(target, {
-        x: historyX,
-        y: -0.48,
-        rx: 0.03,
-        ry: 1.9,
-        rz: -0.02,
-        sx: 0.42,
-        sy: 0.42,
-        sz: 0.42,
-        opacity: 0.18,
-        duration: 1,
-      })
-      .to(target, {
-        x: historyX + 0.65,
-        y: -0.24,
-        ry: 2.35,
-        sx: 0.32,
-        sy: 0.32,
-        sz: 0.32,
-        opacity: 0,
-        duration: 0.55,
       });
 
     ScrollTrigger.refresh();

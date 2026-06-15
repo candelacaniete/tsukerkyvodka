@@ -1,13 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BottleCanvas } from "@/components/visuals/BottleCanvas";
-import { FlavorControls } from "@/components/visuals/FlavorControls";
-import { StickerField } from "@/components/visuals/StickerField";
-import type { FlavorId } from "@/components/visuals/flavor";
-import { flavors } from "@/components/visuals/flavor";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,20 +56,6 @@ const storyTiles = [
 ];
 
 export function TsukerkyLanding() {
-  const [activeFlavor, setActiveFlavor] = useState<FlavorId>("pink");
-
-  useEffect(() => {
-    const flavor = flavors[activeFlavor];
-    gsap.to(document.documentElement, {
-      "--flavor": flavor.accent,
-      "--flavor-soft": flavor.soft,
-      "--flavor-deep": flavor.deep,
-      "--flavor-rgb": flavor.rgb,
-      duration: 0.9,
-      ease: "power3.out",
-    });
-  }, [activeFlavor]);
-
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from("[data-hero-word]", {
@@ -111,22 +93,14 @@ export function TsukerkyLanding() {
 
   return (
     <main data-scroll-story className="editorial-shell overflow-hidden">
-      <BottleCanvas flavor={activeFlavor} />
-      <StickerField />
-      <TechnicalEdgeCopy />
+      <BottleCanvas flavor="pink" />
       <div className="noise" aria-hidden="true" />
 
       <section
         data-section="hero"
         className="relative z-30 grid min-h-screen grid-cols-6 px-6 pb-32 pt-8 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
       >
-        <div className="col-span-6 flex items-start justify-between text-[0.62rem] font-black uppercase tracking-[0.32em] text-[#8d6f86] md:col-span-12">
-          <span>Tsukerky Vodka</span>
-          <span className="hidden sm:block">Hecho con vodka / sabor chicle</span>
-          <span>Colección 2026</span>
-        </div>
-
-        <div className="col-span-6 mt-24 md:col-span-12 md:mt-28">
+        <div className="col-span-6 mt-20 md:col-span-12 md:mt-24">
           <h1
             className="display-serif relative z-10 max-w-[9ch] font-black uppercase leading-[0.76] tracking-[-0.11em] text-[#56304a] md:max-w-none"
             style={{ fontSize: "clamp(4.7rem, 13.5vw, 15rem)" }}
@@ -150,11 +124,8 @@ export function TsukerkyLanding() {
 
         <div className="z-40 col-span-6 mt-auto grid gap-4 md:col-start-2 md:col-span-3 md:pb-16">
           <div className="cloud-card rounded-[2.4rem] p-6">
-            <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.22em] text-[#a06a91]">
-              Vodka chicle
-            </p>
-            <p className="display-serif mt-4 text-3xl font-black leading-none text-[#56304a]">
-              {flavors[activeFlavor].label}
+            <p className="display-serif text-3xl font-black leading-none text-[#56304a]">
+              Chicle Rosa
             </p>
             <p className="mt-4 text-sm leading-6 text-[#73556c]">
               Una botella grande, flotando en el centro, como un caramelo que
@@ -172,10 +143,7 @@ export function TsukerkyLanding() {
           data-fade-in
           className="cloud-card col-span-6 max-w-2xl rounded-[3rem] p-7 md:col-start-2 md:col-span-5 md:p-10"
         >
-          <p className="font-mono text-[0.64rem] font-bold uppercase tracking-[0.28em] text-[#a06a91]">
-            Manifiesto
-          </p>
-          <h2 className="display-serif mt-5 text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
+          <h2 className="display-serif text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
             Texto de manifiesto demo.
           </h2>
           <p className="mt-7 text-lg leading-8 text-[#73556c]">
@@ -195,10 +163,7 @@ export function TsukerkyLanding() {
         className="relative z-40 min-h-screen px-6 py-28 sm:px-10 md:px-14 lg:px-20"
       >
         <div data-fade-in className="mx-auto max-w-4xl text-center">
-          <p className="font-mono text-[0.64rem] font-bold uppercase tracking-[0.28em] text-[#a06a91]">
-            Cuatro productos
-          </p>
-          <h2 className="display-serif mt-5 text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
+          <h2 className="display-serif text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
             Una fila de sabores para armar tu ritual frío.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#73556c]">
@@ -213,6 +178,7 @@ export function TsukerkyLanding() {
             <article
               key={product.name}
               data-fade-in
+              data-bottle-card={index === 0 ? "true" : undefined}
               className="cloud-card relative min-h-[28rem] overflow-hidden rounded-[3rem] p-6"
             >
               <div
@@ -231,9 +197,11 @@ export function TsukerkyLanding() {
                 </div>
               )}
               <div className="relative z-10 mt-72">
-                <p className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#a06a91]">
-                  {index === 0 ? "Producto real 3D" : product.note}
-                </p>
+                {index === 0 ? (
+                  <p className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#a06a91]">
+                    Producto real 3D
+                  </p>
+                ) : null}
                 <h3 className="display-serif mt-3 text-4xl font-black leading-none tracking-[-0.05em] text-[#56304a]">
                   {product.name}
                 </h3>
@@ -251,10 +219,7 @@ export function TsukerkyLanding() {
         className="relative z-40 grid min-h-[125vh] grid-cols-6 gap-y-10 px-6 py-28 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
       >
         <div data-fade-in className="col-span-6 md:col-span-12">
-          <p className="font-mono text-[0.64rem] font-bold uppercase tracking-[0.28em] text-[#a06a91]">
-            Historia de Tsukerky
-          </p>
-          <h2 className="display-serif mt-5 max-w-5xl text-6xl font-black leading-[0.86] tracking-[-0.08em] text-[#56304a] md:text-8xl">
+          <h2 className="display-serif max-w-5xl text-6xl font-black leading-[0.86] tracking-[-0.08em] text-[#56304a] md:text-8xl">
             Nacida en el club, inspirada en los caramelos.
           </h2>
         </div>
@@ -266,10 +231,7 @@ export function TsukerkyLanding() {
             className={`cloud-card ${tile.className} col-span-6 rounded-[3rem] p-7 md:p-9`}
           >
             <div className="mb-8 h-56 rounded-[2.4rem] bg-gradient-to-br from-white/80 via-pink-100/70 to-violet-100/80 shadow-xl shadow-pink-200/30" />
-            <p className="font-mono text-[0.62rem] font-bold uppercase tracking-[0.24em] text-[#a06a91]">
-              {tile.kicker}
-            </p>
-            <h3 className="display-serif mt-4 text-4xl font-black leading-[0.92] tracking-[-0.055em] text-[#56304a] md:text-5xl">
+            <h3 className="display-serif text-4xl font-black leading-[0.92] tracking-[-0.055em] text-[#56304a] md:text-5xl">
               {tile.title}
             </h3>
             <p className="mt-5 text-base leading-7 text-[#73556c]">
@@ -283,10 +245,7 @@ export function TsukerkyLanding() {
         <div className="cloud-card rounded-[3rem] p-7 md:p-10">
           <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="font-mono text-[0.64rem] font-bold uppercase tracking-[0.28em] text-[#a06a91]">
-                Cierre
-              </p>
-              <p className="display-serif mt-4 text-5xl font-black uppercase leading-[0.85] tracking-[-0.08em] text-[#56304a] md:text-8xl">
+              <p className="display-serif text-5xl font-black uppercase leading-[0.85] tracking-[-0.08em] text-[#56304a] md:text-8xl">
                 Tsukerky Vodka
               </p>
             </div>
@@ -305,31 +264,6 @@ export function TsukerkyLanding() {
         </div>
       </footer>
 
-      <FlavorControls
-        activeFlavor={activeFlavor}
-        onFlavorChange={setActiveFlavor}
-      />
     </main>
-  );
-}
-
-function TechnicalEdgeCopy() {
-  return (
-    <>
-      <div className="fixed left-5 top-1/2 z-40 hidden -translate-y-1/2 font-mono text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#7b5d73]/70 md:block">
-        <p className="vertical-copy">30% ALC. VOL / 750 ML / 10 VECES FILTRADO</p>
-      </div>
-      <div className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 font-mono text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#7b5d73]/70 md:block">
-        <p className="vertical-copy rotate-180">
-          Rosa chicle / lila suave / blanco nube
-        </p>
-      </div>
-      <div className="fixed left-6 top-5 z-40 font-mono text-[0.58rem] font-bold uppercase tracking-[0.24em] text-[#7b5d73]/70 sm:left-10 sm:top-8">
-        Lote TSU-10
-      </div>
-      <div className="fixed right-6 top-5 z-40 text-right font-mono text-[0.58rem] font-bold uppercase tracking-[0.24em] text-[#7b5d73]/70 sm:right-10 sm:top-8">
-        Sistema chicle premium
-      </div>
-    </>
   );
 }
