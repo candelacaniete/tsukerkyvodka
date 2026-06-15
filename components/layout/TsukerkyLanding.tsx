@@ -40,9 +40,9 @@ const storeProducts: Array<{
     kind: "combo-diamond",
   },
   {
-    name: "Tsukerky Glow - Purple",
+    name: "Tsukerky Glow - Pink",
     price: "$5.300,00",
-    detail: "Glow purple para sumar brillo a la previa.",
+    detail: "Colorante en polvo rosa para sumar brillo a la previa.",
     kind: "glow",
   },
 ];
@@ -265,11 +265,20 @@ function ProductVisual({
   return (
     <div className="relative h-full w-full">
       {showGlow ? (
-        <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-fuchsia-300 via-purple-300 to-violet-500 shadow-2xl shadow-purple-300/50">
-          <div className="absolute inset-5 rounded-full border border-[#56304a]/40 bg-white/30" />
-          <div className="absolute inset-x-2 top-10 text-center text-[0.48rem] font-black uppercase tracking-[0.12em] text-[#56304a]">
-            Tsukerky
+        <div className="absolute inset-0 bg-gradient-to-b from-fuchsia-200/55 via-pink-200/60 to-purple-200/40">
+          <div className="absolute left-[34%] top-[45%] h-16 w-28 -translate-x-1/2 rounded-[50%] border border-[#56304a]/20 bg-gradient-to-b from-pink-200 to-fuchsia-300 shadow-xl shadow-pink-300/40" />
+          <div className="absolute left-[34%] top-[50%] h-14 w-28 -translate-x-1/2 rounded-b-[1.8rem] border-x border-b border-[#56304a]/20 bg-pink-300/55" />
+          <div className="absolute left-[61%] top-[43%] h-28 w-28 -translate-x-1/2 rounded-full bg-[#151019] shadow-2xl shadow-purple-300/50">
+            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-[#ff1493] via-[#c60072] to-[#8b275f]" />
+            <div className="absolute inset-x-5 top-10 text-center text-sm font-black uppercase leading-none tracking-[-0.04em] text-[#151019]">
+              Tsukerky
+            </div>
+            <div className="absolute inset-x-6 top-5 h-16 rounded-full border border-[#151019]/45" />
           </div>
+          <div className="absolute bottom-8 left-1/2 h-8 w-36 -translate-x-1/2 rounded-[50%] bg-gradient-to-r from-pink-300 via-fuchsia-300 to-pink-200 blur-[1px]" />
+          <div className="absolute bottom-9 left-1/2 h-4 w-28 -translate-x-1/2 rounded-[50%] bg-pink-300/80" />
+          <div className="absolute bottom-10 left-[42%] h-2 w-2 rounded-full bg-fuchsia-300" />
+          <div className="absolute bottom-12 left-[58%] h-1.5 w-1.5 rounded-full bg-pink-400" />
         </div>
       ) : null}
 
