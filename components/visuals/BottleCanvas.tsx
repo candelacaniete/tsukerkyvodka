@@ -33,6 +33,34 @@ type ScrollTarget = {
   motion: number;
 };
 
+const mobileStartTarget: ScrollTarget = {
+  x: 0.88,
+  y: -0.08,
+  z: 0,
+  rx: 0,
+  ry: 0.08,
+  rz: 0,
+  sx: 0.56,
+  sy: 0.56,
+  sz: 0.56,
+  opacity: 1,
+  motion: 1,
+};
+
+const desktopStartTarget: ScrollTarget = {
+  x: 0,
+  y: -0.04,
+  z: 0,
+  rx: 0,
+  ry: 0,
+  rz: 0,
+  sx: 1.04,
+  sy: 1.04,
+  sz: 1.04,
+  opacity: 1,
+  motion: 1,
+};
+
 export function BottleCanvas({ flavor }: BottleCanvasProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -114,24 +142,21 @@ function BottleRig({ flavor }: BottleRigProps) {
   const groupRef = useRef<THREE.Group | null>(null);
   const liquidMaterialRef = useRef<THREE.MeshPhysicalMaterial | null>(null);
   const pointer = useRef({ x: 0, y: 0 });
-  const scrollTarget = useRef<ScrollTarget>({
-    x: 0,
-    y: -0.04,
-    z: 0,
-    rx: 0,
-    ry: 0,
-    rz: 0,
-    sx: 1.04,
-    sy: 1.04,
-    sz: 1.04,
-    opacity: 1,
-    motion: 1,
-  });
+  const isMobileRef = useRef(false);
+  const scrollTarget = useRef<ScrollTarget>({ ...desktopStartTarget });
   const materialOpacities = useRef<
     Array<{ material: THREE.Material; baseOpacity: number }>
   >([]);
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    isMobileRef.current = isMobile;
+
+    if (isMobile) {
+      Object.assign(scrollTarget.current, mobileStartTarget);
+      return;
+    }
+
     const handlePointerMove = (event: PointerEvent) => {
       pointer.current.x = (event.clientX / window.innerWidth - 0.5) * 2;
       pointer.current.y = (event.clientY / window.innerHeight - 0.5) * 2;
@@ -180,7 +205,18 @@ function BottleRig({ flavor }: BottleRigProps) {
 
     const target = scrollTarget.current;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const manifestoX = isMobile ? 0.48 : 1.18;
+    isMobileRef.current = isMobile;
+
+    const startTarget = isMobile ? mobileStartTarget : desktopStartTarget;
+    Object.assign(target, startTarget);
+
+    if (isMobile) {
+      group.position.set(startTarget.x, startTarget.y, startTarget.z);
+      group.rotation.set(startTarget.rx, startTarget.ry, startTarget.rz);
+      group.scale.set(startTarget.sx, startTarget.sy, startTarget.sz);
+    }
+
+    const manifestoX = isMobile ? 0.72 : 1.18;
 
     const timeline = gsap.timeline({
       defaults: { ease: "none" },
@@ -188,7 +224,7 @@ function BottleRig({ flavor }: BottleRigProps) {
         trigger: "[data-scroll-story]",
         start: "top top",
         endTrigger: "[data-section='manifesto']",
-        end: "top top",
+        end: isMobile ? "top 42%" : "top top",
         scrub: 1,
         invalidateOnRefresh: true,
       },
@@ -197,13 +233,13 @@ function BottleRig({ flavor }: BottleRigProps) {
     timeline
       .to(target, {
         x: manifestoX,
-        y: -0.36,
-        rx: 0.05,
-        ry: 0.48,
-        rz: -0.045,
-        sx: 0.92,
-        sy: 0.92,
-        sz: 0.92,
+        y: isMobile ? -0.06 : -0.36,
+        rx: isMobile ? 0.015 : 0.05,
+        ry: isMobile ? 0.22 : 0.48,
+        rz: isMobile ? -0.015 : -0.045,
+        sx: isMobile ? 0.5 : 0.92,
+        sy: isMobile ? 0.5 : 0.92,
+        sz: isMobile ? 0.5 : 0.92,
         opacity: 1,
         motion: 0,
         duration: 1,
@@ -253,31 +289,32 @@ function BottleRig({ flavor }: BottleRigProps) {
     const cursorY = pointer.current.y;
     const target = scrollTarget.current;
     const motion = target.motion;
+    const pointerMotion = isMobileRef.current ? 0 : motion;
 
     group.position.y = THREE.MathUtils.lerp(
       group.position.y,
-      target.y + floatY * motion,
+      target.y + floatY * motion * (isMobileRef.current ? 0.55 : 1),
       damping,
     );
     group.position.x = THREE.MathUtils.lerp(
       group.position.x,
-      target.x + cursorX * 0.12 * motion,
+      target.x + cursorX * 0.12 * pointerMotion,
       damping,
     );
     group.position.z = THREE.MathUtils.lerp(group.position.z, target.z, damping);
     group.rotation.x = THREE.MathUtils.lerp(
       group.rotation.x,
-      target.rx - cursorY * 0.1 * motion,
+      target.rx - cursorY * 0.1 * pointerMotion,
       damping,
     );
     group.rotation.y = THREE.MathUtils.lerp(
       group.rotation.y,
-      target.ry + cursorX * 0.16 * motion,
+      target.ry + cursorX * 0.16 * pointerMotion,
       damping,
     );
     group.rotation.z = THREE.MathUtils.lerp(
       group.rotation.z,
-      target.rz - cursorX * 0.035 * motion,
+      target.rz - cursorX * 0.035 * pointerMotion,
       damping,
     );
     group.scale.x = THREE.MathUtils.lerp(group.scale.x, target.sx, damping);

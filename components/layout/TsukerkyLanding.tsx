@@ -107,7 +107,29 @@ export function TsukerkyLanding() {
       >
         <div className="col-span-6 flex min-h-[68vh] items-center md:col-span-12">
           <h1
-            className="display-serif relative z-10 grid w-full grid-cols-[minmax(0,1fr)_minmax(6rem,24vw)_minmax(0,1fr)] grid-rows-2 items-center gap-x-3 gap-y-8 font-black uppercase leading-[0.78] tracking-[-0.1em] text-[#56304a] sm:gap-x-6 md:gap-x-10"
+            className="display-serif relative z-10 grid w-full grid-cols-[minmax(0,0.92fr)_minmax(7.5rem,0.72fr)] grid-rows-2 items-center gap-x-4 gap-y-10 font-black uppercase leading-[0.78] tracking-[-0.08em] text-[#56304a] md:hidden"
+            style={{ fontSize: "clamp(3.1rem, 15vw, 6.4rem)" }}
+          >
+            <span className="block overflow-visible py-2 text-left">
+              <span data-hero-word className="block">
+                Tsukerky
+              </span>
+            </span>
+            <span aria-hidden="true" className="block min-h-[9rem]" />
+            <span className="block overflow-visible py-2 text-left">
+              <span
+                data-hero-word
+                className="block text-transparent"
+                style={{ WebkitTextStroke: "1px rgba(86,48,74,.34)" }}
+              >
+                Vodka
+              </span>
+            </span>
+            <span aria-hidden="true" className="block min-h-[9rem]" />
+          </h1>
+
+          <h1
+            className="display-serif relative z-10 hidden w-full grid-cols-[minmax(0,1fr)_minmax(6rem,24vw)_minmax(0,1fr)] grid-rows-2 items-center gap-x-10 gap-y-8 font-black uppercase leading-[0.78] tracking-[-0.1em] text-[#56304a] md:grid"
             style={{ fontSize: "clamp(3.25rem, 10.5vw, 12.5rem)" }}
           >
             <span className="block overflow-visible py-2 text-right">
