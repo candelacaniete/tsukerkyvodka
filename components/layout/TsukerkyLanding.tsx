@@ -7,7 +7,13 @@ import { BottleCanvas } from "@/components/visuals/BottleCanvas";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ProductKind = "combo-ocean" | "combo-diamond" | "ocean" | "diamond" | "glow";
+type ProductKind =
+  | "combo-ocean"
+  | "combo-diamond"
+  | "ocean"
+  | "diamond"
+  | "glow"
+  | "purple-stickers";
 
 const storeProducts: Array<{
   name: string;
@@ -38,6 +44,12 @@ const storeProducts: Array<{
     price: "$48.000,00",
     detail: "Combo demo con vaso diamond incluido.",
     kind: "combo-diamond",
+  },
+  {
+    name: "Tsukerky Purple Candy + Stickers",
+    price: "$48.000,00",
+    detail: "Botella Purple Candy con pack de stickers demo.",
+    kind: "purple-stickers",
   },
   {
     name: "Tsukerky Glow - Pink",
@@ -166,7 +178,7 @@ export function TsukerkyLanding() {
           </h2>
         </div>
 
-        <div className="mt-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
           {storeProducts.map((product) => (
             <article
               key={product.name}
@@ -260,6 +272,7 @@ function ProductVisual({
   const showOcean = kind === "ocean" || kind === "combo-ocean";
   const showDiamond = kind === "diamond" || kind === "combo-diamond";
   const showGlow = kind === "glow";
+  const showPurpleStickers = kind === "purple-stickers";
   const cupPosition = showComboBottle ? "left-[36%]" : "left-1/2";
 
   return (
@@ -282,7 +295,19 @@ function ProductVisual({
         </div>
       ) : null}
 
-      {showComboBottle ? <StaticBottleIllustration className="left-[66%]" /> : null}
+      {showPurpleStickers ? (
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-100/70 via-white/80 to-fuchsia-100/70">
+          <StaticBottleIllustration className="left-1/2" variant="purple" />
+          <StickerDot className="left-[20%] top-[18%] rotate-[-12deg]" copy="Y2K" />
+          <StickerDot className="right-[14%] top-[22%] rotate-[10deg]" copy="UVA" />
+          <StickerDot className="left-[18%] bottom-[18%] rotate-[8deg]" copy="POP" />
+          <StickerDot className="right-[18%] bottom-[16%] rotate-[-8deg]" copy="GLAM" />
+        </div>
+      ) : null}
+
+      {showComboBottle ? (
+        <StaticBottleIllustration className="left-[66%]" variant="pink" />
+      ) : null}
 
       {showOcean ? (
         <CupIllustration
@@ -301,15 +326,43 @@ function ProductVisual({
   );
 }
 
-function StaticBottleIllustration({ className }: { className: string }) {
+function StaticBottleIllustration({
+  className,
+  variant,
+}: {
+  className: string;
+  variant: "pink" | "purple";
+}) {
+  const isPurple = variant === "purple";
+
   return (
     <div className={`absolute top-8 h-48 w-20 -translate-x-1/2 ${className}`}>
       <div className="absolute left-1/2 top-0 h-8 w-9 -translate-x-1/2 rounded-t-xl bg-[#f5d9c2]" />
       <div className="absolute left-1/2 top-7 h-16 w-5 -translate-x-1/2 bg-white/55" />
-      <div className="absolute bottom-0 left-1/2 h-36 w-16 -translate-x-1/2 rounded-b-2xl rounded-t-lg border border-white/80 bg-gradient-to-b from-fuchsia-300 via-fuchsia-400 to-pink-300 shadow-2xl shadow-pink-200/50" />
+      <div
+        className={`absolute bottom-0 left-1/2 h-36 w-16 -translate-x-1/2 rounded-b-2xl rounded-t-lg border border-white/80 shadow-2xl shadow-pink-200/50 ${
+          isPurple
+            ? "bg-gradient-to-b from-violet-300 via-fuchsia-300 to-purple-400"
+            : "bg-gradient-to-b from-fuchsia-300 via-fuchsia-400 to-pink-300"
+        }`}
+      />
       <div className="absolute bottom-12 left-1/2 h-14 w-12 -translate-x-1/2 rounded-md bg-white/75 shadow-md">
-        <div className="mx-auto mt-3 h-5 w-5 rounded-full border border-[#56304a]/60 bg-pink-200" />
+        <div
+          className={`mx-auto mt-3 h-5 w-5 rounded-full border border-[#56304a]/60 ${
+            isPurple ? "bg-lime-200" : "bg-pink-200"
+          }`}
+        />
       </div>
+    </div>
+  );
+}
+
+function StickerDot({ className, copy }: { className: string; copy: string }) {
+  return (
+    <div
+      className={`absolute rounded-full border border-white/80 bg-white/65 px-3 py-2 text-[0.52rem] font-black uppercase tracking-[0.12em] text-[#8b3d87] shadow-lg shadow-violet-200/40 backdrop-blur ${className}`}
+    >
+      {copy}
     </div>
   );
 }
