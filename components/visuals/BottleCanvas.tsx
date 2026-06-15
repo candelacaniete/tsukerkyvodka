@@ -34,17 +34,17 @@ type ScrollTarget = {
 };
 
 const mobileStartTarget: ScrollTarget = {
-  x: 0.88,
-  y: -0.08,
+  x: 1.05,
+  y: -0.04,
   z: 0,
   rx: 0,
   ry: 0.08,
   rz: 0,
-  sx: 0.56,
-  sy: 0.56,
-  sz: 0.56,
+  sx: 0.42,
+  sy: 0.42,
+  sz: 0.42,
   opacity: 1,
-  motion: 1,
+  motion: 0,
 };
 
 const desktopStartTarget: ScrollTarget = {
@@ -70,10 +70,11 @@ export function BottleCanvas({ flavor }: BottleCanvasProps) {
       return;
     }
 
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const trigger = ScrollTrigger.create({
-      trigger: "[data-section='products']",
-      start: "top 92%",
-      end: "top 68%",
+      trigger: isMobile ? "[data-section='manifesto']" : "[data-section='products']",
+      start: isMobile ? "top 96%" : "top 92%",
+      end: isMobile ? "top 76%" : "top 68%",
       scrub: true,
       onUpdate: (self) => {
         gsap.set(wrapper, { autoAlpha: 1 - self.progress });
@@ -214,9 +215,11 @@ function BottleRig({ flavor }: BottleRigProps) {
       group.position.set(startTarget.x, startTarget.y, startTarget.z);
       group.rotation.set(startTarget.rx, startTarget.ry, startTarget.rz);
       group.scale.set(startTarget.sx, startTarget.sy, startTarget.sz);
+      ScrollTrigger.refresh();
+      return;
     }
 
-    const manifestoX = isMobile ? 0.72 : 1.18;
+    const manifestoX = 1.18;
 
     const timeline = gsap.timeline({
       defaults: { ease: "none" },
@@ -224,7 +227,7 @@ function BottleRig({ flavor }: BottleRigProps) {
         trigger: "[data-scroll-story]",
         start: "top top",
         endTrigger: "[data-section='manifesto']",
-        end: isMobile ? "top 42%" : "top top",
+        end: "top top",
         scrub: 1,
         invalidateOnRefresh: true,
       },
@@ -233,13 +236,13 @@ function BottleRig({ flavor }: BottleRigProps) {
     timeline
       .to(target, {
         x: manifestoX,
-        y: isMobile ? -0.06 : -0.36,
-        rx: isMobile ? 0.015 : 0.05,
-        ry: isMobile ? 0.22 : 0.48,
-        rz: isMobile ? -0.015 : -0.045,
-        sx: isMobile ? 0.5 : 0.92,
-        sy: isMobile ? 0.5 : 0.92,
-        sz: isMobile ? 0.5 : 0.92,
+        y: -0.36,
+        rx: 0.05,
+        ry: 0.48,
+        rz: -0.045,
+        sx: 0.92,
+        sy: 0.92,
+        sz: 0.92,
         opacity: 1,
         motion: 0,
         duration: 1,

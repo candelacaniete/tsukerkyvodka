@@ -103,20 +103,20 @@ export function TsukerkyLanding() {
 
       <section
         data-section="hero"
-        className="relative z-30 grid min-h-screen grid-cols-6 px-6 pb-32 pt-8 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
+        className="relative z-30 grid min-h-[78vh] grid-cols-6 px-6 pb-16 pt-8 sm:px-10 md:min-h-screen md:grid-cols-12 md:gap-x-8 md:px-14 md:pb-32 lg:px-20"
       >
-        <div className="col-span-6 flex min-h-[68vh] items-center md:col-span-12">
+        <div className="col-span-6 flex min-h-[48vh] items-center md:col-span-12 md:min-h-[68vh]">
           <h1
-            className="display-serif relative z-10 grid w-full grid-cols-[minmax(0,0.92fr)_minmax(7.5rem,0.72fr)] grid-rows-2 items-center gap-x-4 gap-y-10 font-black uppercase leading-[0.78] tracking-[-0.08em] text-[#56304a] md:hidden"
-            style={{ fontSize: "clamp(3.1rem, 15vw, 6.4rem)" }}
+            className="display-serif relative z-10 grid w-full grid-cols-[minmax(0,0.95fr)_minmax(8rem,0.72fr)] grid-rows-2 items-center gap-x-4 gap-y-1 font-black uppercase leading-[0.74] tracking-[-0.08em] text-[#56304a] md:hidden"
+            style={{ fontSize: "clamp(3rem, 14vw, 5.8rem)" }}
           >
-            <span className="block overflow-visible py-2 text-left">
+            <span className="block overflow-visible py-1 text-left">
               <span data-hero-word className="block">
                 Tsukerky
               </span>
             </span>
-            <span aria-hidden="true" className="block min-h-[9rem]" />
-            <span className="block overflow-visible py-2 text-left">
+            <span aria-hidden="true" className="row-span-2 block min-h-[17rem]" />
+            <span className="block overflow-visible py-1 text-left">
               <span
                 data-hero-word
                 className="block text-transparent"
@@ -125,7 +125,6 @@ export function TsukerkyLanding() {
                 Vodka
               </span>
             </span>
-            <span aria-hidden="true" className="block min-h-[9rem]" />
           </h1>
 
           <h1
@@ -169,7 +168,7 @@ export function TsukerkyLanding() {
 
       <section
         data-section="manifesto"
-        className="relative z-40 grid min-h-screen grid-cols-6 items-center px-6 py-28 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
+        className="relative z-40 grid min-h-[72vh] grid-cols-6 items-center px-6 py-16 sm:px-10 md:min-h-screen md:grid-cols-12 md:gap-x-8 md:px-14 md:py-28 lg:px-20"
       >
         <article
           data-fade-in
@@ -192,7 +191,7 @@ export function TsukerkyLanding() {
 
       <section
         data-section="products"
-        className="relative z-40 min-h-screen px-6 py-28 sm:px-10 md:px-14 lg:px-20"
+        className="relative z-40 min-h-screen px-6 py-16 sm:px-10 md:px-14 md:py-28 lg:px-20"
       >
         <div data-fade-in className="mx-auto max-w-5xl text-center">
           <h2 className="display-serif text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
@@ -200,7 +199,7 @@ export function TsukerkyLanding() {
           </h2>
         </div>
 
-        <div className="mt-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 md:mt-20 lg:grid-cols-6">
           {storeProducts.map((product) => (
             <article
               key={product.name}
@@ -241,7 +240,7 @@ export function TsukerkyLanding() {
 
       <section
         data-section="history"
-        className="relative z-40 grid min-h-screen grid-cols-6 px-6 py-28 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
+        className="relative z-40 grid min-h-[72vh] grid-cols-6 px-6 py-16 sm:px-10 md:min-h-screen md:grid-cols-12 md:gap-x-8 md:px-14 md:py-28 lg:px-20"
       >
         <div data-fade-in className="col-span-6 self-center md:col-span-12">
           <h2 className="display-serif max-w-5xl text-6xl font-black leading-[0.86] tracking-[-0.08em] text-[#56304a] md:text-8xl">
@@ -250,7 +249,7 @@ export function TsukerkyLanding() {
         </div>
       </section>
 
-      <footer className="relative z-40 px-6 pb-10 pt-28 sm:px-10 md:px-14 lg:px-20">
+      <footer className="relative z-40 px-6 pb-10 pt-16 sm:px-10 md:px-14 md:pt-28 lg:px-20">
         <div className="cloud-card rounded-[3rem] p-7 md:p-10">
           <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
             <div>
