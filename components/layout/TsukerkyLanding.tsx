@@ -16,13 +16,6 @@ const storeProducts: Array<{
   imageAlt: string;
 }> = [
   {
-    name: "Tsukerky Pink Candy + Vaso Ocean Pink",
-    price: "$48.000,00",
-    detail: "Combo demo con vaso de regalo. No procesa compra real.",
-    imageSrc: "/products/tsukerky-pink-candy-vaso-ocean-pink.webp",
-    imageAlt: "Botella Tsukerky Pink Candy junto al Vaso Ocean Pink",
-  },
-  {
     name: "Vaso Tsukerky Ocean Pink",
     price: "$29.000,00",
     detail: "Vaso perlado con textura oceánica rosa pastel.",
