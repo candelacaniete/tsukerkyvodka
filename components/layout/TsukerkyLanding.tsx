@@ -184,7 +184,7 @@ export function TsukerkyLanding() {
 
       <section
         data-section="products"
-        className="relative z-40 min-h-screen px-6 py-16 sm:px-10 md:px-14 md:py-28 lg:px-20"
+        className="relative z-40 min-h-screen px-6 py-16 sm:px-10 md:px-12 md:py-28 lg:px-10 xl:px-14 2xl:px-20"
       >
         <div data-fade-in className="mx-auto max-w-5xl text-center">
           <h2 className="display-serif text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
@@ -192,14 +192,14 @@ export function TsukerkyLanding() {
           </h2>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 md:mt-20 lg:grid-cols-6">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 md:mt-20 lg:grid-cols-5 xl:gap-6">
           {storeProducts.map((product) => (
             <article
               key={product.name}
               data-fade-in
-              className="cloud-card relative z-40 min-h-[31rem] overflow-hidden rounded-[2rem] p-5"
+              className="cloud-card relative z-40 min-h-[31rem] overflow-hidden rounded-[2rem] p-5 xl:p-6"
             >
-              <div className="absolute inset-x-5 top-5 h-64 overflow-hidden rounded-[1.45rem] bg-gradient-to-br from-white/80 via-sky-100/70 to-pink-100/70 shadow-xl shadow-pink-200/30">
+              <div className="absolute inset-x-5 top-5 h-64 overflow-hidden rounded-[1.45rem] bg-gradient-to-br from-white/80 via-sky-100/70 to-pink-100/70 shadow-xl shadow-pink-200/30 xl:inset-x-6 xl:top-6">
                 <Image
                   src={product.imageSrc}
                   alt={product.imageAlt}
