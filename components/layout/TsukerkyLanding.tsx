@@ -49,27 +49,6 @@ const storeProducts: Array<{
   },
 ];
 
-const storyTiles = [
-  {
-    kicker: "01 / Origen",
-    title: "Nacida en el club.",
-    body: "Tsukerky aparece cuando la noche empieza a ponerse rara: vasos fríos, luces suaves y una playlist que nadie quiere apagar.",
-    className: "md:col-start-2 md:col-span-4 md:row-start-1",
-  },
-  {
-    kicker: "02 / Recuerdo",
-    title: "Inspirada en los caramelos.",
-    body: "Ese sabor de kiosco, chicle y bolsa de golosinas convertido en un objeto premium para mirar, servir y compartir.",
-    className: "md:col-start-7 md:col-span-5 md:row-start-1 md:mt-24",
-  },
-  {
-    kicker: "03 / Actitud",
-    title: "Dulce, urbana, cero obvia.",
-    body: "No busca parecer seria: busca verse inolvidable. Rosa pastel, vidrio helado y una presencia que se queda en la foto.",
-    className: "md:col-start-4 md:col-span-5 md:row-start-2",
-  },
-];
-
 export function TsukerkyLanding() {
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -165,7 +144,7 @@ export function TsukerkyLanding() {
           className="cloud-card col-span-6 max-w-2xl rounded-[3rem] p-7 md:col-start-2 md:col-span-5 md:p-10"
         >
           <h2 className="display-serif text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
-            Texto de manifiesto demo.
+            About Us
           </h2>
           <p className="mt-7 text-lg leading-8 text-[#73556c]">
             Tsukerky no nació para quedarse quieta. Nació para mezclar
@@ -187,10 +166,6 @@ export function TsukerkyLanding() {
           <h2 className="display-serif text-5xl font-black leading-[0.9] tracking-[-0.06em] text-[#56304a] md:text-7xl">
             Tienda demo para armar tu ritual frío.
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#73556c]">
-            Catálogo visual no funcional: los botones no procesan compras, solo
-            muestran cómo se vería la experiencia online de Tsukerky.
-          </p>
         </div>
 
         <div className="mt-20 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
@@ -231,29 +206,13 @@ export function TsukerkyLanding() {
 
       <section
         data-section="history"
-        className="relative z-40 grid min-h-[125vh] grid-cols-6 gap-y-10 px-6 py-28 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
+        className="relative z-40 grid min-h-screen grid-cols-6 px-6 py-28 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
       >
-        <div data-fade-in className="col-span-6 md:col-span-12">
+        <div data-fade-in className="col-span-6 self-center md:col-span-12">
           <h2 className="display-serif max-w-5xl text-6xl font-black leading-[0.86] tracking-[-0.08em] text-[#56304a] md:text-8xl">
             Nacida en el club, inspirada en los caramelos.
           </h2>
         </div>
-
-        {storyTiles.map((tile) => (
-          <article
-            key={tile.kicker}
-            data-fade-in
-            className={`cloud-card ${tile.className} col-span-6 rounded-[3rem] p-7 md:p-9`}
-          >
-            <div className="mb-8 h-56 rounded-[2.4rem] bg-gradient-to-br from-white/80 via-pink-100/70 to-violet-100/80 shadow-xl shadow-pink-200/30" />
-            <h3 className="display-serif text-4xl font-black leading-[0.92] tracking-[-0.055em] text-[#56304a] md:text-5xl">
-              {tile.title}
-            </h3>
-            <p className="mt-5 text-base leading-7 text-[#73556c]">
-              {tile.body}
-            </p>
-          </article>
-        ))}
       </section>
 
       <footer className="relative z-40 px-6 pb-10 pt-28 sm:px-10 md:px-14 lg:px-20">
