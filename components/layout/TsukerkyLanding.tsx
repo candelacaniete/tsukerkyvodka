@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,55 +8,54 @@ import { BottleCanvas } from "@/components/visuals/BottleCanvas";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ProductKind =
-  | "combo-ocean"
-  | "combo-diamond"
-  | "ocean"
-  | "diamond"
-  | "glow"
-  | "purple-stickers";
-
 const storeProducts: Array<{
   name: string;
   price: string;
   detail: string;
-  kind: ProductKind;
+  imageSrc: string;
+  imageAlt: string;
 }> = [
   {
     name: "Tsukerky Pink Candy + Vaso Ocean Pink",
     price: "$48.000,00",
     detail: "Combo demo con vaso de regalo. No procesa compra real.",
-    kind: "combo-ocean",
+    imageSrc: "/products/tsukerky-pink-candy-vaso-ocean-pink.png",
+    imageAlt: "Botella Tsukerky Pink Candy junto al Vaso Ocean Pink",
   },
   {
     name: "Vaso Tsukerky Ocean Pink",
     price: "$29.000,00",
     detail: "Vaso perlado con textura oceánica rosa pastel.",
-    kind: "ocean",
+    imageSrc: "/products/vaso-tsukerky-ocean-pink.png",
+    imageAlt: "Vaso Tsukerky Ocean Pink",
   },
   {
     name: "Vaso Tsukerky Diamond Pink",
     price: "$29.000,00",
     detail: "Vaso rosa con tapa y textura diamond Y2K.",
-    kind: "diamond",
+    imageSrc: "/products/vaso-tsukerky-diamond-pink.png",
+    imageAlt: "Vaso Tsukerky Diamond Pink",
   },
   {
     name: "Tsukerky Pink Candy + Vaso Diamond Pink",
     price: "$48.000,00",
     detail: "Combo demo con vaso diamond incluido.",
-    kind: "combo-diamond",
+    imageSrc: "/products/tsukerky-pink-candy-vaso-diamond-pink.png",
+    imageAlt: "Botella Tsukerky Pink Candy junto al Vaso Diamond Pink",
   },
   {
     name: "Tsukerky Purple Candy + Stickers",
     price: "$48.000,00",
     detail: "Botella Purple Candy con pack de stickers demo.",
-    kind: "purple-stickers",
+    imageSrc: "/products/tsukerky-purple-candy-stickers.png",
+    imageAlt: "Botella Tsukerky Purple Candy con stickers",
   },
   {
     name: "Tsukerky Glow - Pink",
     price: "$5.300,00",
     detail: "Colorante en polvo rosa para sumar brillo a la previa.",
-    kind: "glow",
+    imageSrc: "/products/tsukerky-glow-pink.png",
+    imageAlt: "Tsukerky Glow Pink en polvo",
   },
 ];
 
@@ -186,7 +186,13 @@ export function TsukerkyLanding() {
               className="cloud-card relative z-40 min-h-[31rem] overflow-hidden rounded-[2rem] p-5"
             >
               <div className="absolute inset-x-5 top-5 h-64 overflow-hidden rounded-[1.45rem] bg-gradient-to-br from-white/80 via-sky-100/70 to-pink-100/70 shadow-xl shadow-pink-200/30">
-                <ProductVisual kind={product.kind} />
+                <Image
+                  src={product.imageSrc}
+                  alt={product.imageAlt}
+                  width={520}
+                  height={520}
+                  className="h-full w-full object-contain p-4"
+                />
               </div>
               <div className="relative z-[60] mt-72">
                 <h3 className="min-h-16 text-lg font-black leading-tight text-[#ff1493]">
@@ -263,178 +269,3 @@ function CloudLayer() {
   );
 }
 
-function ProductVisual({
-  kind,
-}: {
-  kind: ProductKind;
-}) {
-  const showComboBottle = kind === "combo-ocean" || kind === "combo-diamond";
-  const showOcean = kind === "ocean" || kind === "combo-ocean";
-  const showDiamond = kind === "diamond" || kind === "combo-diamond";
-  const showGlow = kind === "glow";
-  const showPurpleStickers = kind === "purple-stickers";
-  const cupPosition = showComboBottle ? "left-[36%]" : "left-1/2";
-
-  return (
-    <div className="relative h-full w-full">
-      {showGlow ? (
-        <div className="absolute inset-0 bg-gradient-to-b from-fuchsia-200/55 via-pink-200/60 to-purple-200/40">
-          <div className="absolute left-[34%] top-[45%] h-16 w-28 -translate-x-1/2 rounded-[50%] border border-[#56304a]/20 bg-gradient-to-b from-pink-200 to-fuchsia-300 shadow-xl shadow-pink-300/40" />
-          <div className="absolute left-[34%] top-[50%] h-14 w-28 -translate-x-1/2 rounded-b-[1.8rem] border-x border-b border-[#56304a]/20 bg-pink-300/55" />
-          <div className="absolute left-[61%] top-[43%] h-28 w-28 -translate-x-1/2 rounded-full bg-[#151019] shadow-2xl shadow-purple-300/50">
-            <div className="absolute inset-4 rounded-full bg-gradient-to-br from-[#ff1493] via-[#c60072] to-[#8b275f]" />
-            <div className="absolute inset-x-5 top-10 text-center text-sm font-black uppercase leading-none tracking-[-0.04em] text-[#151019]">
-              Tsukerky
-            </div>
-            <div className="absolute inset-x-6 top-5 h-16 rounded-full border border-[#151019]/45" />
-          </div>
-          <div className="absolute bottom-8 left-1/2 h-8 w-36 -translate-x-1/2 rounded-[50%] bg-gradient-to-r from-pink-300 via-fuchsia-300 to-pink-200 blur-[1px]" />
-          <div className="absolute bottom-9 left-1/2 h-4 w-28 -translate-x-1/2 rounded-[50%] bg-pink-300/80" />
-          <div className="absolute bottom-10 left-[42%] h-2 w-2 rounded-full bg-fuchsia-300" />
-          <div className="absolute bottom-12 left-[58%] h-1.5 w-1.5 rounded-full bg-pink-400" />
-        </div>
-      ) : null}
-
-      {showPurpleStickers ? (
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-100/70 via-white/80 to-fuchsia-100/70">
-          <StaticBottleIllustration className="left-1/2" variant="purple" />
-          <StickerDot className="left-[20%] top-[18%] rotate-[-12deg]" copy="Y2K" />
-          <StickerDot className="right-[14%] top-[22%] rotate-[10deg]" copy="UVA" />
-          <StickerDot className="left-[18%] bottom-[18%] rotate-[8deg]" copy="POP" />
-          <StickerDot className="right-[18%] bottom-[16%] rotate-[-8deg]" copy="GLAM" />
-        </div>
-      ) : null}
-
-      {showComboBottle ? (
-        <StaticBottleIllustration className="left-[66%]" variant="pink" />
-      ) : null}
-
-      {showOcean ? (
-        <CupIllustration
-          className={cupPosition}
-          variant="ocean"
-        />
-      ) : null}
-
-      {showDiamond ? (
-        <CupIllustration
-          className={cupPosition}
-          variant="diamond"
-        />
-      ) : null}
-    </div>
-  );
-}
-
-function StaticBottleIllustration({
-  className,
-  variant,
-}: {
-  className: string;
-  variant: "pink" | "purple";
-}) {
-  const isPurple = variant === "purple";
-
-  return (
-    <div className={`absolute top-8 h-48 w-20 -translate-x-1/2 ${className}`}>
-      <div className="absolute left-1/2 top-0 h-8 w-9 -translate-x-1/2 rounded-t-xl bg-[#f5d9c2]" />
-      <div className="absolute left-1/2 top-7 h-16 w-5 -translate-x-1/2 bg-white/55" />
-      <div
-        className={`absolute bottom-0 left-1/2 h-36 w-16 -translate-x-1/2 rounded-b-2xl rounded-t-lg border border-white/80 shadow-2xl shadow-pink-200/50 ${
-          isPurple
-            ? "bg-gradient-to-b from-violet-300 via-fuchsia-300 to-purple-400"
-            : "bg-gradient-to-b from-fuchsia-300 via-fuchsia-400 to-pink-300"
-        }`}
-      />
-      <div className="absolute bottom-12 left-1/2 h-14 w-12 -translate-x-1/2 rounded-md bg-white/75 shadow-md">
-        <div
-          className={`mx-auto mt-3 h-5 w-5 rounded-full border border-[#56304a]/60 ${
-            isPurple ? "bg-lime-200" : "bg-pink-200"
-          }`}
-        />
-      </div>
-    </div>
-  );
-}
-
-function StickerDot({ className, copy }: { className: string; copy: string }) {
-  return (
-    <div
-      className={`absolute rounded-full border border-white/80 bg-white/65 px-3 py-2 text-[0.52rem] font-black uppercase tracking-[0.12em] text-[#8b3d87] shadow-lg shadow-violet-200/40 backdrop-blur ${className}`}
-    >
-      {copy}
-    </div>
-  );
-}
-
-function CupIllustration({
-  className,
-  variant,
-}: {
-  className: string;
-  variant: "ocean" | "diamond";
-}) {
-  const isDiamond = variant === "diamond";
-
-  return (
-    <div
-      className={`absolute top-9 h-44 w-20 -translate-x-1/2 overflow-hidden border border-white/80 shadow-2xl shadow-pink-200/40 ${className} ${
-        isDiamond
-          ? "rounded-b-[1.35rem] rounded-t-[0.7rem] bg-gradient-to-b from-white via-white to-pink-300"
-          : "rounded-b-[1.7rem] rounded-t-xl bg-gradient-to-b from-pink-200 via-sky-200 to-cyan-200"
-      }`}
-      style={
-        isDiamond
-          ? { clipPath: "polygon(12% 0, 88% 0, 78% 100%, 22% 100%)" }
-          : undefined
-      }
-    >
-      {variant === "ocean" ? (
-        <div className="absolute inset-0 opacity-60">
-          {Array.from({ length: 7 }).map((_, row) =>
-            Array.from({ length: 4 }).map((__, col) => (
-              <span
-                key={`${row}-${col}`}
-                className="absolute h-8 w-9 rounded-b-full border-x border-b border-white/70 bg-white/10"
-                style={{
-                  left: `${col * 1.35 - (row % 2) * 0.66}rem`,
-                  top: `${row * 1.28}rem`,
-                }}
-              />
-            )),
-          )}
-        </div>
-      ) : null}
-      {isDiamond ? (
-        <div className="absolute inset-0 opacity-45">
-          {Array.from({ length: 9 }).map((_, row) =>
-            Array.from({ length: 5 }).map((__, col) => (
-              <span
-                key={`${row}-${col}`}
-                className="absolute h-4 w-4 rotate-45 border border-[#cfc7d8]/70 bg-white/30"
-                style={{
-                  left: `${col * 1.05 - 0.1}rem`,
-                  top: `${row * 1.05}rem`,
-                }}
-              />
-            )),
-          )}
-        </div>
-      ) : null}
-      <div
-        className={`absolute -top-1 left-1/2 h-7 w-20 -translate-x-1/2 rounded-t-xl ${
-          isDiamond ? "bg-[#ff6f9f]" : "bg-[#3d3448]/75"
-        }`}
-      />
-      <div
-        className={`absolute left-1/2 top-0 h-32 w-1 -translate-x-1/2 -translate-y-10 ${
-          isDiamond ? "bg-[#ff4f88]" : "bg-white/75"
-        }`}
-      />
-      <div className="absolute left-1/2 top-14 h-11 w-11 -translate-x-1/2 rounded-full border-2 border-[#56304a]/60 bg-white/60">
-        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-300 via-pink-400 to-fuchsia-500" />
-        <div className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
-      </div>
-    </div>
-  );
-}
