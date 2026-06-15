@@ -57,7 +57,7 @@ export function BottleCanvas({ flavor }: BottleCanvasProps) {
   return (
     <div
       ref={wrapperRef}
-      className="pointer-events-none fixed inset-0 z-[35] h-screen w-full"
+      className="pointer-events-none fixed inset-0 z-[48] h-screen w-full"
     >
       <Canvas
         camera={{ position: [0, 0.25, 6.3], fov: 34 }}
@@ -208,13 +208,13 @@ function BottleRig({ flavor }: BottleRigProps) {
       })
       .to(target, {
         x: productsX,
-        y: -0.46,
+        y: -0.42,
         rx: -0.02,
         ry: 1.18,
         rz: 0.04,
-        sx: 0.34,
-        sy: 0.5,
-        sz: 0.34,
+        sx: 0.22,
+        sy: 0.32,
+        sz: 0.22,
         opacity: 1,
         duration: 1,
       });
@@ -341,12 +341,12 @@ function BottleBody({
           ref={liquidMaterialRef}
           color={flavors[flavor].liquid}
           emissive={flavors[flavor].liquid}
-          emissiveIntensity={0.025}
-          roughness={0.2}
-          transmission={0.42}
+          emissiveIntensity={0.045}
+          roughness={0.16}
+          transmission={0.34}
           thickness={0.62}
           transparent
-          opacity={0.54}
+          opacity={0.68}
           clearcoat={0.86}
         />
       </mesh>
@@ -401,29 +401,39 @@ function BottleBody({
 
 function BottleLabel() {
   return (
-    <group position={[0, -0.45, 0.925]}>
+    <group position={[0, -0.45, 0]}>
       <mesh>
-        <planeGeometry args={[1.46, 1.67]} />
-        <meshBasicMaterial color="#ffe0ee" transparent opacity={0.9} />
+        <cylinderGeometry args={[0.914, 0.914, 1.67, 96, 1, true, -0.72, 1.44]} />
+        <meshBasicMaterial
+          color="#ffe0ee"
+          transparent
+          opacity={0.9}
+          side={THREE.DoubleSide}
+        />
       </mesh>
-      <mesh position={[0, 0, 0.012]}>
-        <planeGeometry args={[1.31, 1.51]} />
-        <meshBasicMaterial color="#fff4f9" transparent opacity={0.58} />
+      <mesh>
+        <cylinderGeometry args={[0.918, 0.918, 1.51, 96, 1, true, -0.62, 1.24]} />
+        <meshBasicMaterial
+          color="#fff4f9"
+          transparent
+          opacity={0.58}
+          side={THREE.DoubleSide}
+        />
       </mesh>
-      <mesh position={[0, 0.47, 0.026]}>
+      <mesh position={[0, 0.47, 0.922]}>
         <torusGeometry args={[0.24, 0.014, 12, 72]} />
         <meshBasicMaterial color="#4f2a44" />
       </mesh>
-      <mesh position={[0, 0.47, 0.034]}>
+      <mesh position={[0, 0.47, 0.93]}>
         <torusGeometry args={[0.16, 0.018, 12, 72]} />
         <meshBasicMaterial color="#b99cff" />
       </mesh>
-      <mesh position={[0, 0.47, 0.042]}>
+      <mesh position={[0, 0.47, 0.938]}>
         <circleGeometry args={[0.09, 48]} />
-        <meshBasicMaterial color="#ff8fbc" />
+        <meshBasicMaterial color="#ff008f" />
       </mesh>
       <Text
-        position={[0, 0.04, 0.05]}
+        position={[0, 0.04, 0.944]}
         fontSize={0.18}
         letterSpacing={0.045}
         color="#4f2a44"
@@ -433,7 +443,7 @@ function BottleLabel() {
         TSUKERKY
       </Text>
       <Text
-        position={[0, -0.23, 0.05]}
+        position={[0, -0.23, 0.944]}
         fontSize={0.055}
         letterSpacing={0.08}
         color="#45303f"
@@ -443,17 +453,17 @@ function BottleLabel() {
         HECHO CON VODKA
       </Text>
       <Text
-        position={[0, -0.45, 0.05]}
+        position={[0, -0.45, 0.944]}
         fontSize={0.115}
         letterSpacing={0.02}
-        color="#d65793"
+        color="#c60072"
         anchorX="center"
         anchorY="middle"
       >
         Chicle Rosa
       </Text>
       <Text
-        position={[0, -0.66, 0.05]}
+        position={[0, -0.66, 0.944]}
         fontSize={0.05}
         letterSpacing={0.08}
         color="#72546a"

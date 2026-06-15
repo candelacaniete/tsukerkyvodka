@@ -151,6 +151,19 @@ body::after {
   backdrop-filter: blur(24px);
 }
 
+.floating-cloud {
+  position: absolute;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 22% 58%, rgba(186, 230, 253, 0.92) 0 28%, transparent 29%),
+    radial-gradient(circle at 44% 38%, rgba(186, 230, 253, 0.86) 0 34%, transparent 35%),
+    radial-gradient(circle at 68% 56%, rgba(186, 230, 253, 0.88) 0 31%, transparent 32%),
+    radial-gradient(circle at 52% 68%, rgba(255, 255, 255, 0.72) 0 43%, transparent 44%);
+  filter: blur(2px);
+  mix-blend-mode: multiply;
+  animation: cloud-drift 18s ease-in-out infinite alternate;
+}
+
 .vertical-copy {
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -166,12 +179,26 @@ body::after {
   }
 }
 
+@keyframes cloud-drift {
+  0% {
+    transform: translate3d(-1.5rem, 0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(1.5rem, -0.85rem, 0) scale(1.04);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
   body {
+    animation: none;
+  }
+
+  .floating-cloud {
     animation: none;
   }
 

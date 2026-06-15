@@ -94,22 +94,24 @@ export function TsukerkyLanding() {
   return (
     <main data-scroll-story className="editorial-shell overflow-hidden">
       <BottleCanvas flavor="pink" />
+      <CloudLayer />
       <div className="noise" aria-hidden="true" />
 
       <section
         data-section="hero"
         className="relative z-30 grid min-h-screen grid-cols-6 px-6 pb-32 pt-8 sm:px-10 md:grid-cols-12 md:gap-x-8 md:px-14 lg:px-20"
       >
-        <div className="col-span-6 mt-20 md:col-span-12 md:mt-24">
+        <div className="col-span-6 flex min-h-[68vh] items-center md:col-span-12">
           <h1
-            className="display-serif relative z-10 max-w-[9ch] font-black uppercase leading-[0.76] tracking-[-0.11em] text-[#56304a] md:max-w-none"
-            style={{ fontSize: "clamp(4.7rem, 13.5vw, 15rem)" }}
+            className="display-serif relative z-10 grid w-full grid-cols-1 gap-y-4 font-black uppercase leading-[0.76] tracking-[-0.11em] text-[#56304a] md:grid-cols-[1fr_minmax(18rem,30vw)_1fr] md:items-center md:gap-x-8"
+            style={{ fontSize: "clamp(3.7rem, 9.4vw, 11rem)" }}
           >
             <span className="block overflow-hidden">
-              <span data-hero-word className="block">
-                Tsukerky
+              <span data-hero-word className="block md:text-right">
+                Tsuskerky
               </span>
             </span>
+            <span aria-hidden="true" className="hidden md:block" />
             <span className="block overflow-hidden">
               <span
                 data-hero-word
@@ -122,17 +124,6 @@ export function TsukerkyLanding() {
           </h1>
         </div>
 
-        <div className="z-40 col-span-6 mt-auto grid gap-4 md:col-start-2 md:col-span-3 md:pb-16">
-          <div className="cloud-card rounded-[2.4rem] p-6">
-            <p className="display-serif text-3xl font-black leading-none text-[#56304a]">
-              Chicle Rosa
-            </p>
-            <p className="mt-4 text-sm leading-6 text-[#73556c]">
-              Una botella grande, flotando en el centro, como un caramelo que
-              decidió volverse premium.
-            </p>
-          </div>
-        </div>
       </section>
 
       <section
@@ -179,24 +170,24 @@ export function TsukerkyLanding() {
               key={product.name}
               data-fade-in
               data-bottle-card={index === 0 ? "true" : undefined}
-              className="cloud-card relative min-h-[28rem] overflow-hidden rounded-[3rem] p-6"
+              className={`cloud-card relative min-h-[28rem] overflow-hidden rounded-[3rem] p-6 ${
+                index === 0 ? "z-[44]" : "z-40"
+              }`}
             >
               <div
-                className={`absolute inset-x-6 top-7 h-52 rounded-[2.4rem] shadow-xl shadow-pink-200/30 ${
+                className={`absolute inset-x-6 top-7 h-64 rounded-[2.4rem] shadow-xl shadow-pink-200/30 ${
                   index === 0
-                    ? "border border-dashed border-pink-300/70 bg-white/15"
+                    ? "bg-white/10"
                     : `bg-gradient-to-br ${product.swatch}`
                 }`}
               />
-              {index === 0 ? (
-                <div className="absolute inset-x-8 top-12 h-64 rounded-[2rem] border border-dashed border-pink-300/60 bg-white/10" />
-              ) : (
+              {index === 0 ? null : (
                 <div className="absolute left-1/2 top-12 h-64 w-24 -translate-x-1/2 rounded-[2rem] border border-white/80 bg-white/45 shadow-2xl shadow-pink-200/40 backdrop-blur-xl">
                   <div className="mx-auto mt-4 h-10 w-16 rounded-t-2xl bg-[#e9c8ad]" />
                   <div className="mx-auto mt-8 h-28 w-16 rounded-2xl bg-white/65" />
                 </div>
               )}
-              <div className="relative z-10 mt-72">
+              <div className="relative z-[60] mt-80">
                 {index === 0 ? (
                   <p className="font-mono text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#a06a91]">
                     Producto real 3D
@@ -265,5 +256,19 @@ export function TsukerkyLanding() {
       </footer>
 
     </main>
+  );
+}
+
+function CloudLayer() {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 z-[3] overflow-hidden opacity-50"
+    >
+      <div className="floating-cloud left-[4vw] top-[14vh] h-36 w-72" />
+      <div className="floating-cloud right-[5vw] top-[26vh] h-28 w-60 [animation-delay:-5s]" />
+      <div className="floating-cloud left-[18vw] top-[72vh] h-24 w-56 [animation-delay:-9s]" />
+      <div className="floating-cloud right-[18vw] top-[76vh] h-32 w-72 [animation-delay:-13s]" />
+    </div>
   );
 }
