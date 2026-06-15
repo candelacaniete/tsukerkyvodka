@@ -30,6 +30,7 @@ type ScrollTarget = {
   sy: number;
   sz: number;
   opacity: number;
+  motion: number;
 };
 
 export function BottleCanvas({ flavor }: BottleCanvasProps) {
@@ -124,6 +125,7 @@ function BottleRig({ flavor }: BottleRigProps) {
     sy: 1.04,
     sz: 1.04,
     opacity: 1,
+    motion: 1,
   });
   const materialOpacities = useRef<
     Array<{ material: THREE.Material; baseOpacity: number }>
@@ -204,6 +206,7 @@ function BottleRig({ flavor }: BottleRigProps) {
         sy: 0.92,
         sz: 0.92,
         opacity: 1,
+        motion: 1,
         duration: 1,
       })
       .to(target, {
@@ -216,6 +219,7 @@ function BottleRig({ flavor }: BottleRigProps) {
         sy: 0.32,
         sz: 0.22,
         opacity: 1,
+        motion: 0,
         duration: 1,
       });
 
@@ -262,31 +266,32 @@ function BottleRig({ flavor }: BottleRigProps) {
     const cursorX = pointer.current.x;
     const cursorY = pointer.current.y;
     const target = scrollTarget.current;
+    const motion = target.motion;
 
     group.position.y = THREE.MathUtils.lerp(
       group.position.y,
-      target.y + floatY,
+      target.y + floatY * motion,
       damping,
     );
     group.position.x = THREE.MathUtils.lerp(
       group.position.x,
-      target.x + cursorX * 0.12,
+      target.x + cursorX * 0.12 * motion,
       damping,
     );
     group.position.z = THREE.MathUtils.lerp(group.position.z, target.z, damping);
     group.rotation.x = THREE.MathUtils.lerp(
       group.rotation.x,
-      target.rx - cursorY * 0.1,
+      target.rx - cursorY * 0.1 * motion,
       damping,
     );
     group.rotation.y = THREE.MathUtils.lerp(
       group.rotation.y,
-      target.ry + cursorX * 0.16,
+      target.ry + cursorX * 0.16 * motion,
       damping,
     );
     group.rotation.z = THREE.MathUtils.lerp(
       group.rotation.z,
-      target.rz - cursorX * 0.035,
+      target.rz - cursorX * 0.035 * motion,
       damping,
     );
     group.scale.x = THREE.MathUtils.lerp(group.scale.x, target.sx, damping);
