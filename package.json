@@ -1,7 +1,7 @@
 {
   "name": "tsukerkyvodka",
   "version": "1.0.0",
-  "description": "Immersive editorial landing for Tsukerky Vodka.",
+  "description": "Landing editorial inmersiva para Tsukerky Vodka.",
   "private": true,
   "scripts": {
     "dev": "next dev",

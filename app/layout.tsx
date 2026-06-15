@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tsukerky Vodka | The Candy Vodka",
+  title: "Tsukerky Vodka | Sabor Chicle",
   description:
-    "An immersive editorial landing page for Tsukerky Vodka, inspired by candy nostalgia, street culture and club energy.",
+    "Landing editorial inmersiva para Tsukerky Vodka: nostalgia candy, estética Y2K y vodka con actitud.",
 };
 
 export default function RootLayout({
