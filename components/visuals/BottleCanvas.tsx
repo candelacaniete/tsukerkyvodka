@@ -34,15 +34,15 @@ type ScrollTarget = {
 };
 
 const mobileStartTarget: ScrollTarget = {
-  x: 1.05,
+  x: 0.66,
   y: -0.04,
   z: 0,
   rx: 0,
   ry: 0.08,
   rz: 0,
-  sx: 0.42,
-  sy: 0.42,
-  sz: 0.42,
+  sx: 0.46,
+  sy: 0.46,
+  sz: 0.46,
   opacity: 1,
   motion: 0,
 };
@@ -73,8 +73,8 @@ export function BottleCanvas({ flavor }: BottleCanvasProps) {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const trigger = ScrollTrigger.create({
       trigger: isMobile ? "[data-section='manifesto']" : "[data-section='products']",
-      start: isMobile ? "top 96%" : "top 92%",
-      end: isMobile ? "top 76%" : "top 68%",
+      start: isMobile ? "top 48%" : "top 92%",
+      end: isMobile ? "top 24%" : "top 68%",
       scrub: true,
       onUpdate: (self) => {
         gsap.set(wrapper, { autoAlpha: 1 - self.progress });

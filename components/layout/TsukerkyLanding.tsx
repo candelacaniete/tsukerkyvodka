@@ -96,9 +96,9 @@ export function TsukerkyLanding() {
 
       <section
         data-section="hero"
-        className="relative z-30 grid min-h-[78vh] grid-cols-6 px-6 pb-16 pt-8 sm:px-10 md:min-h-screen md:grid-cols-12 md:gap-x-8 md:px-14 md:pb-32 lg:px-20"
+        className="relative z-30 grid min-h-[92vh] grid-cols-6 px-6 pb-12 pt-8 sm:px-10 md:min-h-screen md:grid-cols-12 md:gap-x-8 md:px-14 md:pb-32 lg:px-20"
       >
-        <div className="col-span-6 flex min-h-[48vh] items-center md:col-span-12 md:min-h-[68vh]">
+        <div className="col-span-6 flex min-h-[58vh] items-center md:col-span-12 md:min-h-[68vh]">
           <h1
             className="display-serif relative z-10 grid w-full grid-cols-[minmax(0,0.95fr)_minmax(8rem,0.72fr)] grid-rows-2 items-center gap-x-4 gap-y-1 font-black uppercase leading-[0.74] tracking-[-0.08em] text-[#56304a] md:hidden"
             style={{ fontSize: "clamp(3rem, 14vw, 5.8rem)" }}
